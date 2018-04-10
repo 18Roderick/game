@@ -1,5 +1,4 @@
-console.log('hola');
-var config = {
+const config = {
 	type: Phaser.AUTO,
 	width: 800,
 	height: 500,
@@ -9,7 +8,7 @@ var config = {
 		update: update
 	}
 };
-var game = new Phaser.Game(config);
+const game = new Phaser.Game(config);
 
 function preload() {
 
@@ -19,7 +18,8 @@ function create() {
 
 }
 
-function update(){
-	
+function update() {
+
 }
-		
+
+console.log(person);
