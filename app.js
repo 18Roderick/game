@@ -1,46 +1,51 @@
-const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+'use strict'
+const express = require('express'),
+	app = express(),
+	favicon = require('serve-favicon'),
+	morgan = require('morgan'),
+	boddyParser = require('body-parser'),
+	routes = require('./routes/index'),
+	//movies = require('models/movies'),
+	faviconURL = `${__dirname}/public/img/favicon-node.png`,
+	publicDir = express.static(`${__dirname}/public`),
+	viewDir = `${__dirname}/views`,
+	port = (process.env.PORT || 3000)
 
-const index = require('./routes/index');
-const users = require('./routes/users');
 
-const app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app
+	//configurando app
+	.set('views', viewDir)
+	.set('view engine', 'pug')
+	.set('port', port)
+	//ejecutando middlewares
+	.use(favicon(faviconURL))
+	// parsea el formulario a json
+	.use(boddyParser.json())
+	//parsea el fomulario  x-www-form-urlencoded
+	.use(boddyParser.urlencoded({
+		extended: false
+	}))
+	.use(morgan('dev'))
+	.use(publicDir)
+	//ejecutando el enrutador
+	.use(routes)
+	.use(error404)
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+function error404(req, res, next) {
+	let error = new Error(),
+		locals = {
+			title: 'error 404',
+			description: 'Recurso no encontrado',
+			error: error
+		}
+	error.status = 404
+	res.render('error', locals)
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+	next()
+}
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
 
-module.exports = app;
+module.exports = app

@@ -1,0 +1,28 @@
+html { background-color: #0E0D0D; }
+
+
+a, h1 , label { color: #80BD01; }
+
+a:hover{ color: rgba(128, 189, 1, .75); }
+
+
+.logo{
+	display: block;
+	margin: 1rem auto;
+	width: 452px;
+	height: 250;
+	vertical-align: bottom;
+	background: url('../img/fondos-de-avatar.jpg') no-repeat center;
+	background-size: cover;
+}
+
+.error{
+	font-size: 2rem;
+	padding: 1rem;
+	background-color: #80BD01;
+	color: #FFF;
+}
+
+.poster{
+	max-width: 100px;
+}
