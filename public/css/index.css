@@ -1,0 +1,29 @@
+body{
+	position: relative;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+.header-nav{
+	position: relative;
+	overflow: hidden;
+}
+.header-nav a{
+	float: left;
+	text-decoration: none;
+	padding: 16px 14px;
+	font-size: 18px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+.header-nav a:hover{
+	background-color: #E6A5A5;
+}
+.text-white{
+	color: #FFFFFF;
+}
+
+.back-red{
+	background-color: rgba(162, 30, 0, 1);
+}
