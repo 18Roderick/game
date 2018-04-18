@@ -6,9 +6,5 @@
 </head>
 <body>
 	<?php include("routes/header.php"); ?>
-	<?php
-	 include('models/connection.php');
-	 $conexion = new Connection(); 
-	?>
 </body>
 </html>
