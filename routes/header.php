@@ -1,15 +1,17 @@
-<?php session_start(); ?>
+<?php session_start();
+//$_SESSION['usuario_validado'] = 'roderick';
+ ?>
 
-
+<link rel="stylesheet" type="text/css" href="public/css/index.css">
 
 <?php 
 	if (isset($_SESSION['usuario_validado'])) {
  ?> 
 	<nav class="header-nav back-red">
-		<a href=""></a>
-		<a href=""></a>
-		<a href=""></a>
-		<a href=""></a>
+		<a href="">Inicio</a>
+		<a href="">Documentacion</a>
+		<a href="">Jugar</a>
+		<a href="">Perfil</a>
 	</nav>
 
 <?php 
