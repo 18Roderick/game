@@ -1,5 +1,6 @@
+<link rel="stylesheet" type="text/css" href="../public/css/index.css">
 <?php 
-
+include('header.php');
 if ($_SESSION['usuario_validado']) {
 ?>
 	<h1 class="header-title">Ranking</h1>

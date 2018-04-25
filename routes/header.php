@@ -1,12 +1,14 @@
 <?php session_start();
-//$_SESSION['usuario_validado'] = 'roderick';
+$_SESSION['usuario_validado'] = 'roderick';
  ?>
 
 <link rel="stylesheet" type="text/css" href="public/css/index.css">
-
-<?php 
+<div class="banner">
+	
+</div>
+<?php
 	if (isset($_SESSION['usuario_validado'])) {
- ?> 
+ ?>
 	<nav class="header-nav back-red">
 		<a href="">Inicio</a>
 		<a href="">Documentacion</a>
@@ -14,7 +16,7 @@
 		<a href="">Perfil</a>
 	</nav>
 
-<?php 
+<?php
 
 }else{
  ?>
@@ -23,6 +25,6 @@
 		<a href="">Documentacion</a>
 	</nav>
 
-<?php 
+<?php
 }
 ?>
