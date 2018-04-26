@@ -5,6 +5,8 @@
 		<script src="public/js/main.js"></script>
 	</head>
 	<body>
-		<?php include("routes/header.php"); ?>
+		<div class="container-fluid">
+			<?php include("header.php"); ?>
+		</div>
 	</body>
 </html>

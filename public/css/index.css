@@ -27,3 +27,9 @@ body{
 .back-red{
 	background-color: rgba(162, 30, 0, 1);
 }
+
+
+.banner img{
+	width: 100px;
+	height:auto;
+}
