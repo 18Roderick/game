@@ -5,6 +5,7 @@ $_SESSION['usuario_validado'] = 'roderick';
  ?>
 <script type="text/javascript" src="public/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="public/js/main.js"></script>
+<script type="text/javascript" src='public/js/box.js'></script>
 <link rel="stylesheet" type="text/css" href="public/css/bootstrap-grid.css">
 <link rel="stylesheet" type="text/css" href="public/css/index.css">
 <link rel="stylesheet" type="text/css" href="public/css/form.css">
@@ -20,7 +21,7 @@ $_SESSION['usuario_validado'] = 'roderick';
 <?php
 	if (isset($_SESSION['usuario_validado'])) {
  ?>
-	<nav class="header-nav back-red">
+	<nav class="header-nav back-skie">
 		<div class="row">
 			<div class="col-md-2 col-12">
 				<a href="/game">Inicio</a>
