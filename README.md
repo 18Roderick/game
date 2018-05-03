@@ -1,2 +1,2 @@
 # game
-Juego sobre metodoligias de desarrollo de software
+Juego sobre metodologias de desarrollo de software
