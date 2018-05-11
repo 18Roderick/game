@@ -5,7 +5,7 @@
 
 <div class="box">
 	<div class="top-bar">
-		aqui barra de progressos y Numero de modulo
+		
 	</div>
 
 	<div class="container-game">
@@ -27,7 +27,7 @@
 		</p>
 	</div>
 	<div class="bottom-bar">
-		<button class="left">atras</button>
-		<button class="right">siguiente</button>
+		<button class="left bottom-game">&#9668	</button>
+		<button class="right bottom-game">&#9658</button>
 	</div>
 </div>

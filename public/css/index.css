@@ -66,7 +66,7 @@ body{
 	margin-top: 10px;
 	margin-bottom: 10px;
 	width: 800px;
-	height: 600px;
+	height: 500px;
 	border: 1px;
 	border-color: #635F5F;
 	position: relative;
@@ -89,7 +89,7 @@ body{
 	background-color: #e9e9e9;
 }
 .container-game{
-	height: 500;
+	height: 400;
 	width: 700;
 	position: absolute;
 	left: 50px;
@@ -97,8 +97,18 @@ body{
 	bottom: 50px;
 	background-color: #FFFFFF;
 	border-radius: 3px;
+	padding-left: 2%;
+	padding-right: 2%;
 }
-
+.bottom-game{
+	background-color: rgba(100, 221, 23, .8);
+	border:none;
+	padding: 4px 20px;
+	font-size: 20px;
+}
+.bottom-game:hover{
+	cursor: pointer;
+}
 .left{
 	float: left;
 	margin-left: 1%;
