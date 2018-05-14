@@ -41,3 +41,12 @@ function buscarUsuario(user) {
   }
 
 }
+
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav back-skie") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav back-skie";
+    }
+}
