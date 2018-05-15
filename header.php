@@ -17,6 +17,8 @@ $_SESSION['usuario_validado'] = 'roderick';
 		<h1 class="title">
 			Desarrollo de Software Adaptativo
 		</h1>
+
+		
 	</div>
 </div>
 <?php
