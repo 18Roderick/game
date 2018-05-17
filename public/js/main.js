@@ -1,4 +1,4 @@
-const url = () => {
+/* const URL = () => {
   const config = {
     protocolo: 'http:',
     dominio: '//localhost/',
@@ -9,6 +9,29 @@ const url = () => {
   };
   return config.url();
 };
+ */
+window.onload = () => {
+  Main();
+}
+
+function Main() {
+  let titulo = document.querySelector('#titulo3');
+  let spans = document.querySelectorAll('.word span');
+  spans.forEach((span, idx) => {
+    span.addEventListener('click', (e) => {
+      e.target.classList.add('active');
+    });
+    span.addEventListener('animationend', (e) => {
+      e.target.classList.remove('active');
+    });
+
+    // Initial animation
+    setTimeout(() => {
+      span.classList.add('active');
+    }, 750 * (idx + 1))
+  });
+
+}
 
 function validateFrom() {
 
@@ -25,7 +48,7 @@ function buscarUsuario(user) {
   if (user.value.length > 0) {
     $.ajax({
       data,
-      url,
+      url:URL() ,
       type: 'GET',
       beforeSend: () => {
         $('#usuario').html('Procesando, espere por favor...');
