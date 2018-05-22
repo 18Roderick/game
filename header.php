@@ -34,9 +34,9 @@ $_SESSION['usuario_validado'] = 'roderick';
 	if (isset($_SESSION['usuario_validado'])) {
  ?>
 	<div class="topnav back-skie" id="myTopnav">
-	  <a href="#">Inicio</a>
+	  <a href="/game">Inicio</a>
 	  <a href="#">Documentacion</a>
-	  <a href="#">Jugar</a>
+	  <a href="/game/jugar.php">Jugar</a>
 	  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
 	    <i class="fa fa-bars"></i>
 	  </a>
