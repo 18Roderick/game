@@ -1,0 +1,24 @@
+.modulos{
+  box-shadow: 0 10px 20px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 30px;
+}
+
+.modulos:hover{
+  box-shadow: 0 10px 20px 5px rgba(0, 0, 0, 0.3);
+  cursor:pointer;
+}
+.bottom-bar{
+  width: 100%;
+  background-color: #a8a8a8;
+  text-align: center;
+}
+
+.progress-bar{
+  width: 50%;
+  height: 7px;
+  border-radius: 5px;
+  background-color:  #03c3cf;
+}
+
