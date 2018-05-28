@@ -7,7 +7,7 @@ if ($_SESSION['usuario_validado']) {
 
 
 	<div class="container-table">
-		<h1 class="header-title">Listado de los mejores 100 jugadores</h1>
+		<h1 class="header-title">Listado de los mejores 20 jugadores</h1>
 		<div class="control">
 			<input type="text" name="user" placeholder="nombre de usuario">
 			<button>Buscar</button>

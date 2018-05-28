@@ -35,8 +35,10 @@ $_SESSION['usuario_validado'] = 'roderick';
  ?>
 	<div class="topnav back-skie" id="myTopnav">
 	  <a href="/game">Inicio</a>
-	  <a href="#">Documentacion</a>
-	  <a href="/game/jugar.php">Jugar</a>
+	  <a href="#">Temas</a>
+		<a href="/game/jugar.php">Ranking</a>
+		<a href="">Tutorial</a>
+		<a href="">Creditos</a>
 	  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
 	    <i class="fa fa-bars"></i>
 	  </a>
