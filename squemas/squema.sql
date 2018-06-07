@@ -30,6 +30,6 @@ BEGIN
 values(_nombre, _apellido, _username, _correo, _password);
 END;
 
-CALL nuevo_usuario('Roderick', 'Romero','m','1996-09-21', 'rkey507', 'rjrr507@gmail.com', '1234');
+CALL nuevo_usuario('Roderick', 'Romero', 'rkey507', 'rjrr507@gmail.com', '1234');
 
 

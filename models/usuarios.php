@@ -9,11 +9,10 @@ class Usuarios extends Connection
     {
         parent::__construct();
     }
-    public function nuevo_usuario($nombre, $apellido, $sexo, $fecha, $username, $correo, $password)
+    public function nuevo_usuario($nombre, $apellido, $username, $correo, $password)
     {
 
-        $instruccion = "CALL nuevo_usuario('" . $nombre . "','" . $apellido . "','" . $sexo . "','" . $fecha . "'
-											,'" . $username . "','" . $correo . "','" . $password . "')";
+        $instruccion = "CALL nuevo_usuario('" . $nombre . "','" . $apellido . "','" . $username . "','" . $correo . "','" . $password . "')";
 
         $consulta = $this->db->query($instruccion);
         $this->db->close();

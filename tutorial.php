@@ -10,7 +10,6 @@ include('header.php');
 	<video controls id="video">
 		<source src="public/videos/1. Configuración inicial de SQL y PHP.mp4" type="video/mp4">
 	</video>
-	<button id="playTutorial" onclick="playVideo()">Reproducir tutorial</button>
 </div>
 
 <script type="text/javascript">
