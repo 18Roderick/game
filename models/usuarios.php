@@ -11,6 +11,11 @@ class Usuarios extends Connection
     }
     public function nuevo_usuario($nombre, $apellido, $username, $correo, $password)
     {
+        $nombre = mysql_real_escape_string($nombre);
+        $apellido = mysql_real_escape_string($apellido);
+        $username = mysql_real_escape_string($username);
+        $correo = mysql_real_escape_string($correo);
+        $password = mysql_real_escape_string($password);
 
         $instruccion = "CALL nuevo_usuario('" . $nombre . "','" . $apellido . "','" . $username . "','" . $correo . "','" . $password . "')";
 
