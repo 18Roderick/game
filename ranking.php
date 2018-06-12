@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="public/css/table.css">
 <?php 
 include('header.php');
-if ($_SESSION['usuario_validado']) {
+if ($_SESSION['usuario']) {
 ?>
 
 
@@ -124,6 +124,8 @@ if ($_SESSION['usuario_validado']) {
 	</div>
 
 <?php	
+}else{
+	header('Location: http://localhost/game');
 }
 
 ?>
