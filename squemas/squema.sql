@@ -1,6 +1,6 @@
 DROP DATABASE game; 
 CREATE DATABASE IF NOT EXISTS game CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE game;
+USE mydb;
 
 CREATE TABLE IF NOT EXISTS usuario
 (
