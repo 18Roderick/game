@@ -1,6 +1,6 @@
 <?php 
 include('header.php');
-
+if(isset($_SESSION['usuario'])){
 
 ?>
 
@@ -15,3 +15,9 @@ include('header.php');
 <script type="text/javascript">
 
 </script>
+
+<?php
+}else{
+	header('Location: http://localhost/game');
+}
+?>
