@@ -1,5 +1,5 @@
 <?php session_start();
-$_SESSION['usuario_validado'] = 'roderick';
+//$_SESSION['usuario_validado'] = 'roderick';
 
 ?>
 <script type="text/javascript" src="public/js/jquery-3.3.1.min.js"></script>
