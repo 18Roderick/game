@@ -23,7 +23,7 @@
 @media screen and (max-width: 600px) {
 	.game-title h1 {
 		padding-top: 4%;
-		font-size: 3.5rem;
+		font-size: 3rem;
 	}
 }
 
@@ -193,4 +193,21 @@
 .right {
 	float: right;
 	margin-right: 1%;
+}
+
+
+.link-button{
+  text-decoration: none;
+  padding: 13px 30px;
+  color: white;
+  border-radius: 5px;
+  margin-top: 1%;
+}
+
+.info-button{
+  background-color: #0080ff;
+}
+
+.login-button{
+  background-color: #009525
 }

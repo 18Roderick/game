@@ -124,6 +124,8 @@ if ($_SESSION['usuario_validado']) {
 	</div>
 
 <?php	
+}else{
+	header('Location: http://localhost/game/login.php');
 }
 
 ?>
