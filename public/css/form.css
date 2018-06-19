@@ -75,6 +75,11 @@
   visibility: hidden;
 }
 
+.inputGroup:hover{
+  background-color:rgba(54,170, 202, .9);
+  border-color: rgba(54,170, 202, .9);
+}
+
 
 
 
@@ -87,6 +92,8 @@
 	box-shadow: 0 0 20px 2px rgba(169, 161, 161, 1);
 	
 }
+
+
 .container-form {	
 	padding: 2%;
 	margin:5px;
@@ -103,6 +110,15 @@
 	width: 49.58%;
 	margin: 0;
 	padding: 0;
+}
+
+@media screen and (max-width: 600px) {
+	.main-form {
+    width: 300px;
+  }
+  .half{
+    width: 100%;
+  }
 }
 
 .label-form{
@@ -163,19 +179,42 @@
 
 .warning{
   color:  #856404;
-  font-size: 15px;
+  font-size: 13px;
+  font-weight: bold;
   background-color:#fff3cd;
   border-color: #ffeeba;
-  padding: 5px;
+  padding: 3px;
   border-radius: 5px;
   margin-bottom: 2px;
 }
 
 .succes{
   color: #155724;
-  font-size: 15px;
+  font-size: 13px;
+  font-weight: bold;
   background-color:  #d4edda;
   border-color: #c3e6cb;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 2px;
+}
+
+.light{
+  color: #818182;
+  background-color: #fefefe;
+  border-color: #fdfdfe;
+  font-size: 13px;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 2px;
+}
+.info{
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  font-size: 13px;
+  font-weight: bold;
   border-radius: 5px;
   padding: 5px;
   margin-bottom: 2px;

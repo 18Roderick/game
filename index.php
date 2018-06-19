@@ -2,7 +2,6 @@
 <html>
 	<head>
 		<title>Inicio</title>
-		<script src="public/js/main.js"></script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -10,3 +9,6 @@
 		</div>
 	</body>
 </html>
+<?php
+
+?>

@@ -24,7 +24,7 @@ class Usuarios extends Connection
 
     }
 
-    public function existe_usuario($correo)
+    public function existe_usuario($correo, $cedula, $user)
     {
 
         $instruccion = "CALL existe_usuario('" . $correo . "')";

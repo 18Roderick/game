@@ -1,5 +1,3 @@
-const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-const cedulaRegex= /^P$|^(?:PE|E|N|[23456789]|[23456789](?:A|P)?|1[0123]?|1[0123]?(?:A|P)?)$|^(?:PE|E|N|[23456789]|[23456789](?:AV|PI)?|1[0123]?|1[0123]?(?:AV|PI)?)-?$|^(?:PE|E|N|[23456789](?:AV|PI)?|1[0123]?(?:AV|PI)?)-(?:\d{1,4})-?$|^(PE|E|N|[23456789](?:AV|PI)?|1[0123]?(?:AV|PI)?)-(\d{1,4})-(\d{1,5})$/i
 
 window.onload = function(){
   var form = document.querySelector('form');
@@ -7,7 +5,7 @@ window.onload = function(){
 
 }
 
-const URL = () => {
+const URL = ( () => {
   const config = {
     protocolo: 'http:',
     dominio: '//localhost/',
@@ -16,20 +14,22 @@ const URL = () => {
       return `${this.protocolo}${this.dominio}${this.archivo}`;
     },
   };
+
   return config.url();
-};
+  
+} ) ();
 
 
 function validateFrom(form) {
   var nombre = document.forms['formulario']['nombre'];
   var apellido = document.forms['formulario']['apellido'];
-
+  console.log('hola');
   return false;
 
 }
 
 function buscarUsuario(user) {
-
+  console.log(URL);
   const data = {
     user: user.value,
   };
@@ -37,7 +37,7 @@ function buscarUsuario(user) {
     $('#usuario').fadeIn();
     $.ajax({
       data,
-      url:URL() ,
+      url:URL ,
       type: 'GET',
       beforeSend: () => {
         $('#usuario').html('Procesando, espere por favor...');
@@ -46,7 +46,7 @@ function buscarUsuario(user) {
         $('#usuario').html(response);
         setTimeout(()=>{
           $('#usuario').fadeOut();
-        },3000);
+        },5000);
         $('#registrar').css('visibility', 'visible');
         $("#registrar").slideDown(1000);
       },
@@ -66,4 +66,28 @@ function myFunction() {
     } else {
         x.className = "topnav back-skie";
     }
+}
+
+function notLogged(){
+  swal({
+    title: 'No puedes acceder a esta ruta!',
+    text: 'Nessita iniciar sesion',
+    type: 'info',
+    showCloseButton: true,
+    showCancelButton:true,
+    focusConfirm:false,  
+    cancelButtonText: 'No tengo cuenta',
+    confirmButtonText: 'Iniciar session',
+    footer: '<h3>Acceso denegado<h3>'
+  })
+    .then( result => {
+        let protocolo = window.location.protocol+'//';
+        let host = window.location.hostname;
+        if (result.value) { 
+          window.location.assign(`${protocolo}${host}/game/login.php`);
+        } 
+        else if( result.dismiss === swal.DismissReason.cancel ){
+          window.location.assign(`${protocolo}${host}/game/registrar.php`);
+        }
+    })
 }

@@ -1,6 +1,6 @@
 <?php 
 include('header.php');
-if(isset($_SESSION['usuario'])){
+if(isset($_SESSION['usuario_validado'])){
 
 ?>
 
