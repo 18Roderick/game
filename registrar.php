@@ -19,18 +19,28 @@ if (array_key_exists('registrar', $_POST)) {
 	$fecha = $_POST['fecha'];
 	$cedula = $_POST['cedula'];
 	$celular = $_POST['celular'];
-  $user = $_POST['userName'];
+  $username = $_POST['userName'];
 	$correo = $_POST['email'];
-	$sexo= $_POST['sexo'];
-  $clave = $_POST['password'];
-  $clave2 = $_POST['password2'];
-	$key = crypt($clave, substr($correo, 0, 2));
+	$sexo= strtoupper($_POST['sexo']);
+  $password = $_POST['password'];
+  $password2 = $_POST['password2'];
+	$passwordEncrypt = crypt($password, substr($correo, 0, 2));
 	
 
 	$corregir = validar($_POST);
 	if($corregir['validar']){
 		//header('Location: http://localhost/game');
+		//require_once('models/Usuario.php');
+		$NewUser = new Usuario();
+		$exito = $NewUser->nuevo_usuario(
+			$nombre, $apellido, $sexo, $cedula,
+			$celular,	$correo, $fecha, $username, 
+			$passwordEncrypt
+		);
+		
+		
 		printSucces();
+		echo $exito;
 	}else{
 		printForm($corregir);
 	
@@ -122,10 +132,10 @@ function printForm($corregir){
 
 				<p>Genero <span id="mensaje-genero"></span></p>
 				<div class="inputGroup">
-					<input id="radio1" name="sexo" type="radio" required value="f"
+					<input id="radio1" name="sexo" type="radio" required value="F"
 					 <?php
 					 	if(!empty($_POST) ){
-							 if($_POST['sexo'] == 'f' ){ echo "checked='checked'"; }
+							 if($_POST['sexo'] == 'F' ){ echo "checked='checked'"; }
 						 }
 					 ?>
 					/>
@@ -133,10 +143,10 @@ function printForm($corregir){
 				</div>
 
 				<div class="inputGroup">
-					<input id="radio2" name="sexo" type="radio" value="m"
+					<input id="radio2" name="sexo" type="radio" value="M"
 					<?php
 					 	if(!empty($_POST) ){
-							 if($_POST['sexo'] == 'm' ){ echo "checked='checked'"; }
+							 if($_POST['sexo'] == 'M' ){ echo "checked='checked'"; }
 						 }
 					 ?>
 					/>

@@ -9,7 +9,7 @@ const URL = ( () => {
   const config = {
     protocolo: 'http:',
     dominio: '//localhost/',
-    archivo: 'game/data_info.php',
+    archivo: 'game/api/data_info.php',
     url: function() {
       return `${this.protocolo}${this.dominio}${this.archivo}`;
     },

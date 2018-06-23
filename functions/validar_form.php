@@ -5,7 +5,8 @@ $celularRegex = '/^\d{4}-\d{4}$/';  //'/^\d{3}-\d{4}-\d{4}$/'
 $blankRegex = '/\s/';
 $passwordRegex = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{8,15}$/';
 function validar($data){
-  require_once('models/usuarios.php');
+  require_once('models/Usuario.php');
+  $Usuario = new Usuario();
   $validacion = 0;
   
   if(!empty($data)){
@@ -49,8 +50,6 @@ function validar($data){
       if( !preg_match_all($GLOBALS['passwordRegex'], $data['password']) ){
         $corregir['mensaje_password'] = 'no cumple las condciones';
         $validacion++;
-      }else{
-        echo "si cumple";
       }
       
     }else{
@@ -69,7 +68,7 @@ function validar($data){
     }
 
     
-    echo  var_dump($corregir);
+    
   }else{
     $corregir['validar'] =  false;
     return $corregir;

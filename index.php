@@ -4,7 +4,7 @@
 		<title>Inicio</title>
 	</head>
 	<body>
-		<div class="container-fluid">
+		<div>
 			<?php include("header.php"); ?>
 		</div>
 	</body>
