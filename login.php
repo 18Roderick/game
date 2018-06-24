@@ -5,8 +5,8 @@ include_once 'header.php';
 if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin'])) {
 
     require_once 'models/Usuario.php';
-
-    $correo = "";
+    $hashed_password = "goq5QxfSX04e.";
+    $user = "";
     $password = "";
     $message_correo = "";
     $message_password = "";
@@ -14,14 +14,23 @@ if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin']))
 
     if (isset($_REQUEST['notLogged'])) {
         print('
-		<p align="center" class="warning info-message">Para acceder necesitas iniciar sesion</p>
-	');
+					<p align="center" class="warning info-message">Para acceder necesitas iniciar sesion</p>
+				');
     }
 
     if (array_key_exists('enviar', $_POST)) {
-        $correo = $_POST['correo'];
-        $password = $_POST['password'];
-        $message = "<p class='warning'> correo o contraseña incorrectos</p>";
+        $Usuario = new Usuario();
+        $user = $_POST['user'];
+        $password = crypt($_POST['password'], $hashed_password);
+
+        $exito = $Usuario->iniciar_sesion($user, $password);
+        if ($exito > 0) {
+            $_SESSION['usuario_validado'] = true;
+            header('Location: http://localhost/game/jugar.php');
+        } else {
+            $message = "<p class='warning'> correo o contraseña incorrectos</p>";
+        }
+
     }
 
     print('
@@ -34,9 +43,9 @@ if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin']))
 
 				<form action="./login.php" class="form" method="POST" onsubmit="return validateLogin()">
 
-				<label for="correo" class="label-form">correo : </label>
-				<input type="email" class="input-form text" name="correo"
-				value="' . $correo . '" id="correo" placeholder="Escriba su correo">
+				<label for="user" class="label-form">Nombre de usuario, cedula o correo : </label>
+				<input type="text" class="input-form text" name="user"
+				value="' . $user . '" id="user" placeholder="Escriba su usuario, su cedula o correo">
 
 				<label for="password" class="label-form">Apellido :</label>
 				<input type="password" class="input-form text" name="password"
@@ -54,9 +63,7 @@ if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin']))
 
 ');
 
-}else{
-	header('Location: http://localhost/game');
+} else {
+    header('Location: http://localhost/game');
 }
-
-
 ?>

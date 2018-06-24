@@ -5,7 +5,10 @@
 	</head>
 	<body>
 		<div>
-			<?php include("header.php"); ?>
+			<?php
+			 include_once "./header.php";
+			 session_destroy();
+			  ?>
 		</div>
 	</body>
 </html>

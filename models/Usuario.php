@@ -31,12 +31,14 @@ class Usuario extends Connection
         if (!$consulta) {
             echo "Error al realizar consulta <br>" . $this->db->error . "<br>";
             echo $instruccion;
+            $this->db->close();
+            return false;
 
         }
         $this->db->close();
         return $consulta;
 
-        echo "Despues del cierre de consulta";
+        
 
     }
 
@@ -59,6 +61,69 @@ class Usuario extends Connection
         return $data[$function . "('" . $user . "')"];
 
     }
+
+    public function existe_correo($correo)
+    {
+        $correo = $this->db->real_escape_string($correo);
+        $function = "fnValidarCorreo";
+        $instruccion = "SELECT " . $function . "('" . $correo . "') as alias";
+
+        $consulta = $this->db->query($instruccion);
+
+        if (!$consulta) {
+            echo "Error al realizar consulta <br>" . $this->db->error . "<br>";
+            echo $instruccion;
+
+        }
+
+        $data = $consulta->fetch_assoc();
+        $this->db->close();
+        return $data["alias"];
+
+    }
+
+    public function existe_cedula($cedula)
+    {
+        $cedula = $this->db->real_escape_string($cedula);
+        $function = "fnValidarCedula";
+        $instruccion = "SELECT " . $function . "('" . $cedula . "') as alias";
+
+        $consulta = $this->db->query($instruccion);
+
+        if (!$consulta) {
+            echo "Error al realizar consulta <br>" . $this->db->error . "<br>";
+            echo $instruccion;
+
+        }
+
+        $data = $consulta->fetch_assoc();
+        $this->db->close();
+        return $data["alias"];
+
+    }
+
+    
+    public function iniciar_sesion($user, $password)
+    {
+        $user = $this->db->real_escape_string($user);
+        $password = $this->db->real_escape_string($password);
+        $function = "fnIniciarSesion";
+        $instruccion = "SELECT " . $function . "('" . $user . "', '".$password."') as alias";
+
+        $consulta = $this->db->query($instruccion);
+
+        if (!$consulta) {
+            echo "Error al realizar consulta <br>" . $this->db->error . "<br>";
+            echo $instruccion;
+
+        }
+
+        $data = $consulta->fetch_assoc();
+        $this->db->close();
+        return $data["alias"];
+
+    }
+
 
     public function injection($data)
     {

@@ -5,7 +5,7 @@ if( isset($_POST['correo']) ){
   $correo = $_POST['correo'];
   $data = array();
   $NewUser = new Usuario();
-  $exito = $NewUser->existe_usuario($username);
+  $exito = $NewUser->existe_correo($correo);
 
 
   if ($exito < 1) {

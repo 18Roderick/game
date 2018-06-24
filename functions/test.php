@@ -5,7 +5,7 @@ $password = "@18Roderick";
 $passwordEncrypt = crypt($password, substr($correo, 0, 2));
 
 $NewUser = new Usuario();
-$exito = $NewUser->existe_usuario('rjrr507');
+$exito = $NewUser->existe_correo('rjrr507@gmail.com');
 
 echo $exito;
 if ($exito < 1) {

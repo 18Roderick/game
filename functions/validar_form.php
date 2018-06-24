@@ -7,7 +7,6 @@ $passwordRegex = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Z
 function validar($data)
 {
     require_once 'models/Usuario.php';
-    $Usuario = new Usuario();
     $validacion = 0;
 
     if (!empty($data)) {
@@ -27,11 +26,28 @@ function validar($data)
         if (!preg_match_all($GLOBALS['cedulaRegex'], $data['cedula'])) {
             $corregir['mensaje_cedula'] = 'Numeracion incorrecta';
             $validacion++;
+        }else {
+            $Usuario = new Usuario();
+            $exito = $Usuario->existe_cedula($data['cedula']);
+
+            if ($exito != 0) {
+                $corregir['mensaje_cedula'] = 'Este ya esta en uso';
+                $validacion++;
+            }
         }
+
         //email
         if (!preg_match_all($GLOBALS['emailRegex'], $data['email'])) {
             $corregir['mensaje_correo'] = 'Correo no valido';
             $validacion++;
+        } else {
+            $Usuario = new Usuario();
+            $exito = $Usuario->existe_correo($data['email']);
+
+            if ($exito != 0) {
+                $corregir['mensaje_correo'] = 'Este correo ya existe';
+                $validacion++;
+            }
         }
 
         //celular
@@ -46,10 +62,11 @@ function validar($data)
             $corregir['mensaje_user'] = 'Introduzca un nombre de usuario';
             $validacion++;
         } else {
+            $Usuario = new Usuario();
             $exito = $Usuario->existe_usuario($data['userName']);
 
-            if ($exito == 0) {
-                $corregir['mensaje_user'] = 'Introduzca un nombre de usuario';
+            if ($exito != 0) {
+                $corregir['mensaje_user'] = 'Este usuario ya existe';
                 $validacion++;
             }
         }
