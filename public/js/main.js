@@ -1,7 +1,7 @@
 
 window.onload = function(){
   var form = document.querySelector('form');
-  //$('#registrar').attr('disabled', true);
+  $('#registrar').attr('disabled', true);
 
 }
 
@@ -9,7 +9,7 @@ const URL = ( () => {
   const config = {
     protocolo: 'http:',
     dominio: '//localhost/',
-    archivo: 'game/api/data_info.php',
+    archivo: 'game/api/validar_usuario.php',
     url: function() {
       return `${this.protocolo}${this.dominio}${this.archivo}`;
     },
@@ -31,24 +31,30 @@ function validateFrom(form) {
 function buscarUsuario(user) {
   console.log(URL);
   const data = {
-    user: user.value,
+    username: user.value,
   };
   if (user.value.length > 0) {
     $('#usuario').fadeIn();
     $.ajax({
       data,
       url:URL ,
-      type: 'GET',
+      type: 'POST',
       beforeSend: () => {
         $('#usuario').html('Procesando, espere por favor...');
       },
       success: response => {
-        $('#usuario').html(response);
-        setTimeout(()=>{
-          $('#usuario').fadeOut();
-        },5000);
-        $('#registrar').css('visibility', 'visible');
-        $("#registrar").slideDown(1000);
+        let json = JSON.parse(response);
+        
+        if(json.result){
+          $('#usuario').addClass('succes');
+          $('#usuario').html('Disponible');
+          $('#registrar').attr('disabled', false);
+        }else{
+          $('#usuario').addClass('warning').removeClass('succes');
+          $('#usuario').html('Ya existe este usuario');
+          $('#registrar').attr('disabled', true);
+        }
+        console.log(json);
       },
     });
 

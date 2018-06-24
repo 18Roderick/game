@@ -1,6 +1,6 @@
 <?php
 
-require_once ('connection.php');
+require_once 'connection.php';
 
 class Usuario extends Connection
 {
@@ -9,7 +9,8 @@ class Usuario extends Connection
     {
         parent::__construct();
     }
-    public function nuevo_usuario($nombre1, $apellido1, $sexo1, $cedula1, $celular1, $correo1, $fecha1, $username1, $password1) {
+    public function nuevo_usuario($nombre1, $apellido1, $sexo1, $cedula1, $celular1, $correo1, $fecha1, $username1, $password1)
+    {
         //nombre, apellido, sexo, cedula, celular, correo, year,, user, password
         $nombre = $this->db->real_escape_string($nombre1);
         $apellido = $this->db->real_escape_string($apellido1);
@@ -20,45 +21,44 @@ class Usuario extends Connection
         $fecha = $this->db->real_escape_string($fecha1);
         $username = $this->db->real_escape_string($username1);
         $password = $this->db->real_escape_string($password1);
-        $out = @p;
+
         $instruccion = "CALL nuevo_usuario(
-            '".$nombre."','". $apellido."','".$sexo."',
-            '".$cedula."','". $celular."','".$correo."',
-            '".$fecha."','".$username."','".$password."', @p)";
+            '" . $nombre . "','" . $apellido . "','" . $sexo . "',
+            '" . $cedula . "','" . $celular . "','" . $correo . "',
+            '" . $fecha . "','" . $username . "','" . $password . "', @p)";
 
         $consulta = $this->db->query($instruccion);
-        if(!$consulta){
-            echo "Error al realizar consulta <br>". $this->db->error ."<br>";
+        if (!$consulta) {
+            echo "Error al realizar consulta <br>" . $this->db->error . "<br>";
             echo $instruccion;
-            
+
         }
         $this->db->close();
         return $consulta;
-        
 
         echo "Despues del cierre de consulta";
 
     }
 
-
-    public function existe_usuario( $user)
+    public function existe_usuario($user)
     {
         $user = $this->db->real_escape_string($user);
-        $instruccion = "CALL existe_usuario('" . $user . "')";
+        $function = "fnValidarUsuario";
+        $instruccion = "SELECT " . $function . "('" . $user . "')";
 
         $consulta = $this->db->query($instruccion);
 
+        if (!$consulta) {
+            echo "Error al realizar consulta <br>" . $this->db->error . "<br>";
+            echo $instruccion;
 
-        if ($consulta == 0) {
-            echo "sin problemas ".$consulta;
-            $this->db->close();
-            
-            return $consulta;
         }
-        echo "talvez haya problemas";
+
+        $data = $consulta->fetch_assoc();
         $this->db->close();
+        return $data[$function . "('" . $user . "')"];
+
     }
-    
 
     public function injection($data)
     {

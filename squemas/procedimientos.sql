@@ -63,9 +63,11 @@ CREATE PROCEDURE `existe_usuario`(
   OUT _existe INT
 )
 BEGIN
+  SET _existe = 0;
   SET _existe = (
     SELECT count(`username`) FROM `usuario` WHERE `username` = _username
   );
+
 END;
 
 /* use mydb;

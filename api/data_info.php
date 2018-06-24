@@ -6,3 +6,4 @@ if ($user != 'rjrr507') {
 } else {
     echo "<span class='warning'>  ya esta en uso</span>";
 }
+?>

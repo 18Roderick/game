@@ -9,7 +9,6 @@
 
 <link rel="stylesheet" type="text/css" href="public/css/bootstrap-grid.css">
 <link rel="stylesheet" type="text/css" href="public/css/index.css">
-<link rel="stylesheet" type="text/css" href="public/css/form.css">
 
 
 <div class="container-banner">
@@ -27,11 +26,11 @@
 if (isset($_SESSION['usuario_validado'])) {
     ?>
 	<div class="topnav back-skie" id="myTopnav">
-	  <a href="/game">Inicio</a>
-	  <a href="#">Temas</a>
-		<a href="/game/jugar.php">Jugar</a>
-		<a href="/game/tutorial.php">Tutorial</a>
-		<a href="">Creditos</a>
+	  <a href="./">Inicio</a>
+	  <a href="./temas.php">Temas</a>
+		<a href="./jugar.php">Jugar</a>
+		<a href="./tutorial.php">Tutorial</a>
+		<a href="./header.php">Creditos</a>
 	  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
 	    <i class="fa fa-bars"></i>
 	  </a>
@@ -42,11 +41,11 @@ if (isset($_SESSION['usuario_validado'])) {
 } else {
     ?>
 	<div class="topnav back-skie" id="myTopnav">
-	  <a href="/game">Inicio</a>
-	  <a href="javascript:void(0);" >Temas</a>
-		<a href="javascript:void(0);" onclick='notLogged()'>Jugar</a>
-		<a href="javascript:void(0);" >Tutorial</a>
-		<a href="">Creditos</a>
+	  <a href="./">Inicio</a>
+	  <a href="./temas.php">Temas</a>
+		<a href="./jugar.php">Jugar</a>
+		<a href="./tutorial.php">Tutorial</a>
+		<a href="./header.php">Creditos</a>
 	  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
 	    <i class="fa fa-bars"></i>
 	  </a>

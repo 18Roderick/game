@@ -40,7 +40,6 @@ if (array_key_exists('registrar', $_POST)) {
 		
 		
 		printSucces();
-		echo $exito;
 	}else{
 		printForm($corregir);
 	
@@ -235,6 +234,7 @@ function printForm($corregir){
 
 				<input type="submit" class="input-form button" id="registrar" name="registrar" value="Enviar">
 			</form>
+			<a href="/game/login.php">ya tengo cuenta</a>
 			</div>
 		</div>
 
