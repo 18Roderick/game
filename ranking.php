@@ -125,7 +125,7 @@ if ($_SESSION['usuario_validado']) {
 
 <?php	
 }else{
-	header('Location: http://localhost/game/login.php');
+	header('Location: http://localhost/game/login.php?notLogged=true');
 }
 
 ?>

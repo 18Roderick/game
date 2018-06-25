@@ -8,28 +8,46 @@
 </head>
 <body>
 <link rel="stylesheet" type="text/css" href="public/css/form.css">
+<script src="./public/js/form.js"></script>
 <?php include "header.php";?>
 
 <?php
 require('functions/validar_form.php');
 if (array_key_exists('registrar', $_POST)) {
-
+	$hashed_password = "goq5QxfSX04e.";
   $nombre = $_POST['nombre'];
 	$apellido = $_POST['apellido'];
 	$fecha = $_POST['fecha'];
 	$cedula = $_POST['cedula'];
 	$celular = $_POST['celular'];
-  $user = $_POST['userName'];
+  $username = $_POST['userName'];
 	$correo = $_POST['email'];
-	$sexo= $_POST['sexo'];
-  $clave = $_POST['password'];
-  $clave2 = $_POST['password2'];
-	$key = crypt($clave, substr($correo, 0, 2));
+	$sexo= strtoupper($_POST['sexo']);
+  $password = $_POST['password'];
+  $password2 = $_POST['password2'];
+	$passwordEncrypt = crypt($password, $hashed_password);
 	
 
 	$corregir = validar($_POST);
 	if($corregir['validar']){
 		//header('Location: http://localhost/game');
+		//require_once('models/Usuario.php');
+		$exito = $NewUser = new Usuario();
+		$exito = $NewUser->nuevo_usuario(
+			$nombre, $apellido, $sexo, $cedula,
+			$celular,	$correo, $fecha, $username, 
+			$passwordEncrypt
+		);
+
+		if(!$exito){
+			print("<p algin='center' class='warning'>Error al registrar usuario</p>");
+			printForm($corregir);
+		}else{
+			$_SESSION['usuario_validado'] = true;
+			header('Location: http://localhost/game/jugar.php');
+		}
+		
+		
 		printSucces();
 	}else{
 		printForm($corregir);
@@ -122,10 +140,10 @@ function printForm($corregir){
 
 				<p>Genero <span id="mensaje-genero"></span></p>
 				<div class="inputGroup">
-					<input id="radio1" name="sexo" type="radio" required value="f"
+					<input id="radio1" name="sexo" type="radio" required value="F"
 					 <?php
 					 	if(!empty($_POST) ){
-							 if($_POST['sexo'] == 'f' ){ echo "checked='checked'"; }
+							 if($_POST['sexo'] == 'F' ){ echo "checked='checked'"; }
 						 }
 					 ?>
 					/>
@@ -133,10 +151,10 @@ function printForm($corregir){
 				</div>
 
 				<div class="inputGroup">
-					<input id="radio2" name="sexo" type="radio" value="m"
+					<input id="radio2" name="sexo" type="radio" value="M"
 					<?php
 					 	if(!empty($_POST) ){
-							 if($_POST['sexo'] == 'm' ){ echo "checked='checked'"; }
+							 if($_POST['sexo'] == 'M' ){ echo "checked='checked'"; }
 						 }
 					 ?>
 					/>
@@ -160,7 +178,7 @@ function printForm($corregir){
 				required placeholder=" fecha de nacimineto">
 				
 
-				<label for="email" class="label-form">Correo electronico : 
+				<label for="email" class="label-form">Correo electronico :  <span id='correo'></span>
 					<?php 
 					 if(isset($corregir['mensaje_correo'])){
 							echo '<span class=" warning">'.$corregir['mensaje_correo'].'</span>';
@@ -173,7 +191,7 @@ function printForm($corregir){
 						if(isset($_POST['email'])){ echo "value='".$_POST['email']."'"; }
 					?>
 				
-				required placeholder="Escriba su correo electronico">
+				onkeyup="buscarCorreo(this)" required placeholder="Escriba su correo electronico">
 
 				<label for="userName" class="label-form">Nombre de usuario : <span id='usuario'></span>
 					<?php 
@@ -225,6 +243,7 @@ function printForm($corregir){
 
 				<input type="submit" class="input-form button" id="registrar" name="registrar" value="Enviar">
 			</form>
+			<a href="/game/login.php">ya tengo cuenta</a>
 			</div>
 		</div>
 

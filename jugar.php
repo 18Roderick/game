@@ -4,7 +4,7 @@ if($_SESSION['usuario_validado']){
   
   include 'vistas/box.php';
 }else{
-  header('Location: http://localhost/game');
+  header('Location: http://localhost/game/login.php?notLogged=true');
 }
 
 ?>

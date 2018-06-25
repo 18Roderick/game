@@ -4,8 +4,11 @@
 		<title>Inicio</title>
 	</head>
 	<body>
-		<div class="container-fluid">
-			<?php include("header.php"); ?>
+		<div>
+			<?php
+			 include_once "./header.php";
+			 	//session_destroy();
+			  ?>
 		</div>
 	</body>
 </html>
