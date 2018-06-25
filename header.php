@@ -3,7 +3,6 @@
 ?>
 <script type="text/javascript" src="public/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="public/js/main.js"></script>
-<script type="text/javascript" src='public/js/box.js'></script>
 <script src="public/js/sweetalert.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
