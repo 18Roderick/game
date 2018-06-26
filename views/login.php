@@ -1,10 +1,10 @@
 <?php
 
-include_once 'header.php';
+include_once './config.php';
 
 if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin'])) {
 
-    require_once 'models/Usuario.php';
+    require_once ROOT.'/models/Usuario.php';
     $hashed_password = "goq5QxfSX04e.";
     $user = "";
     $password = "";
@@ -26,7 +26,7 @@ if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin']))
         $exito = $Usuario->iniciar_sesion($user, $password);
         if ($exito > 0) {
             $_SESSION['usuario_validado'] = true;
-            header('Location: http://localhost/game/jugar.php');
+            header('Location: http://localhost/game/views/jugar.php');
         } else {
             $message = "<p class='warning'> correo o contraseña incorrectos</p>";
         }
@@ -34,7 +34,7 @@ if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin']))
     }
 
     print('
-		<link rel="stylesheet" type="text/css" href="public/css/form.css">
+		<link rel="stylesheet" type="text/css" href="'.PUBLIC_DIR.'/css/form.css">
 		<div class="main-form">
 			<div id="form-title">
 				<h2 >Iniciar Sesion</h2>
@@ -55,8 +55,8 @@ if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin']))
 				<!-- -->
 				<input type="submit" class="input-form button" name="enviar" value="Enviar">
 				</form>
-				<a href="/game/claveOlvidada.php">olvide mi contraseña</a>
-				<a href="./registrar.php">Crear usuario</a>
+				<a href="#">olvide mi contraseña</a>
+				<a href="'.VIEWS.'/registrar.php">Crear usuario</a>
 			</div>
 		</div>
 

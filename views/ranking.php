@@ -1,7 +1,13 @@
-<link rel="stylesheet" type="text/css" href="public/css/index.css">
-<link rel="stylesheet" type="text/css" href="public/css/table.css">
+
 <?php 
-include('header.php');
+$ruta = $_SERVER["DOCUMENT_ROOT"]."/game/config/";
+include_once($ruta.'root.php');
+
+include_once( ROOT.'/header.php');
+
+print('<link rel="stylesheet" type="text/css" href="'.PUBLIC_DIR.'/css/table.css">');
+
+
 if ($_SESSION['usuario_validado']) {
 ?>
 
@@ -125,7 +131,7 @@ if ($_SESSION['usuario_validado']) {
 
 <?php	
 }else{
-	header('Location: http://localhost/game/login.php?notLogged=true');
+	header('Location: '.HOST.'/login.php?notLogged=true');
 }
 
 ?>

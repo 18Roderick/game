@@ -7,59 +7,59 @@
 	<title>Registro de usuario</title>
 </head>
 <body>
-<link rel="stylesheet" type="text/css" href="public/css/form.css">
-<script src="./public/js/form.js"></script>
-<?php include "header.php";?>
 
-<?php
-require('functions/validar_form.php');
+
+<?php 
+//cargar archvio con variables de ruta
+include_once('./config.php');
+
+require ROOT.'functions/validar_form.php';
+
+
+print('<link rel="stylesheet" type="text/css" href="'.PUBLIC_DIR.'/css/form.css">');
+print('<script src="'.HOST.'/public/js/form.js"></script>');
+
 if (array_key_exists('registrar', $_POST)) {
-	$hashed_password = "goq5QxfSX04e.";
-  $nombre = $_POST['nombre'];
-	$apellido = $_POST['apellido'];
-	$fecha = $_POST['fecha'];
-	$cedula = $_POST['cedula'];
-	$celular = $_POST['celular'];
-  $username = $_POST['userName'];
-	$correo = $_POST['email'];
-	$sexo= strtoupper($_POST['sexo']);
-  $password = $_POST['password'];
-  $password2 = $_POST['password2'];
-	$passwordEncrypt = crypt($password, $hashed_password);
-	
+    $hashed_password = "goq5QxfSX04e.";
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $fecha = $_POST['fecha'];
+    $cedula = $_POST['cedula'];
+    $celular = $_POST['celular'];
+    $username = $_POST['userName'];
+    $correo = $_POST['email'];
+    $sexo = strtoupper($_POST['sexo']);
+    $password = $_POST['password'];
+    $password2 = $_POST['password2'];
+    $passwordEncrypt = crypt($password, $hashed_password);
 
-	$corregir = validar($_POST);
-	if($corregir['validar']){
-		//header('Location: http://localhost/game');
-		//require_once('models/Usuario.php');
-		$exito = $NewUser = new Usuario();
-		$exito = $NewUser->nuevo_usuario(
-			$nombre, $apellido, $sexo, $cedula,
-			$celular,	$correo, $fecha, $username, 
-			$passwordEncrypt
-		);
+    $corregir = validar($_POST);
+    if ($corregir['validar']) {
 
-		if(!$exito){
-			print("<p algin='center' class='warning'>Error al registrar usuario</p>");
-			printForm($corregir);
-		}else{
-			$_SESSION['usuario_validado'] = true;
-			header('Location: http://localhost/game/jugar.php');
-		}
-		
-		
-		printSucces();
-	}else{
-		printForm($corregir);
-	
-	}
-	
+        $exito = $NewUser = new Usuario();
+        $exito = $NewUser->nuevo_usuario(
+            $nombre, $apellido, $sexo, $cedula,
+            $celular, $correo, $fecha, $username,
+            $passwordEncrypt
+        );
 
+        if (!$exito) {
+            print("<p algin='center' class='warning'>Error al registrar usuario</p>");
+            printForm($corregir);
+        } else {
+            $_SESSION['usuario_validado'] = true;
+            header('Location: ' . HOST . '/jugar.php');
+        }
+
+        printSucces();
+    } else {
+        printForm($corregir);
+
+    }
 
 } else {
-    
-	
-	printForm('');
+
+    printForm('');
 
 }
 
@@ -72,7 +72,7 @@ function printForm($corregir){
 		</div>
 		<div class="container-form">
 
-			<form action='/game/registrar.php' class='form' method="POST" name="formulario" onsubmit="return validateForm(this)">
+			<form action='http://localhost/game/registrar.php' class='form' method="POST" name="formulario" onsubmit="return validateForm(this)">
 
 				<div class="half">
 					<label for="nombre" class="label-form">Nombre :
@@ -243,7 +243,7 @@ function printForm($corregir){
 
 				<input type="submit" class="input-form button" id="registrar" name="registrar" value="Enviar">
 			</form>
-			<a href="/game/login.php">ya tengo cuenta</a>
+			<a href="http://localhost/game/login.php">ya tengo cuenta</a>
 			</div>
 		</div>
 
