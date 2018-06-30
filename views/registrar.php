@@ -13,7 +13,7 @@
 //cargar archvio con variables de ruta
 include_once('./config.php');
 
-require ROOT.'functions/validar_form.php';
+require ROOT.'/functions/validar_form.php';
 
 
 print('<link rel="stylesheet" type="text/css" href="'.PUBLIC_DIR.'/css/form.css">');
@@ -48,7 +48,7 @@ if (array_key_exists('registrar', $_POST)) {
             printForm($corregir);
         } else {
             $_SESSION['usuario_validado'] = true;
-            header('Location: ' . HOST . '/jugar.php');
+            header('Location: ' . HOST . '/views/jugar.php');
         }
 
         printSucces();
@@ -68,13 +68,20 @@ function printForm($corregir){
 	?>
 		<div class="main-form">
 		<div id="form-title">
-			<h2 >Registro de usuario</h2>
+			<h4 >Registro de usuario</h4>
 		</div>
 		<div class="container-form">
 
-			<form action='http://localhost/game/registrar.php' class='form' method="POST" name="formulario" onsubmit="return validateForm(this)">
+			<form action='./registrar.php' class='form' method="POST" name="formulario" onsubmit="return validateForm(this)">
 
-				<div class="half">
+				<div class="input-field half">
+				<input type="text" class="input-form text" name="nombre" id="nombre" 
+					<?php
+					//nombre
+						if(!empty($_POST)){ echo "value='".$_POST['nombre']."'"; }
+						
+					?>
+					required placeholder=" Escriba su nombre">
 					<label for="nombre" class="label-form">Nombre :
 						<?php 
 							if(isset($corregir['mensaje_nombre'])){
@@ -82,27 +89,29 @@ function printForm($corregir){
 							}
 						?>
 					</label>
-					<input type="text" class="input-form text" name="nombre" id="nombre" 
-					<?php
-					//nombre
-						if(!empty($_POST)){ echo "value='".$_POST['nombre']."'"; }
-						
-					?>
-					required placeholder=" Escriba su nombre">
+
 				</div>
 
-				<div class="half">
-					<label for="apellido" class="label-form">Apellido :</label>
+				<div class="input-field half">
 					<input type="text" class="input-form text" name="apellido" id="apellido"
 					<?php
 					//codigo de php validacion de campo apellido
 						if(isset($_POST['apellido'])){ echo "value='".$_POST['apellido']."'"; }
 					?>
 					required placeholder=" Escriba su apellido">
+					<label for="apellido" class="label-form">Apellido :</label>
 				</div>
 
 				<!-- datos personales -->
-				<div class="half">
+				<div class="input-field half">
+
+					<input type="text" class="input-form text" name="cedula" id="cedula"
+					<?php
+					//codigo de php validacion de campo cedula
+						if(isset($_POST['cedula'])){ echo "value='".$_POST['cedula']."'"; }
+					?>
+					required placeholder=" x-xxx-xxx">
+
 					<label for="cedula" class="label-form">Cédula : 
 					<?php 
 					 if(isset($corregir['mensaje_cedula'])){
@@ -111,29 +120,23 @@ function printForm($corregir){
 					?>
 					
 					</label>
-					<input type="text" class="input-form text" name="cedula" id="cedula"
-					<?php
-					//codigo de php validacion de campo cedula
-						if(isset($_POST['cedula'])){ echo "value='".$_POST['cedula']."'"; }
-					?>
-					required placeholder=" x-xxx-xxx">
 				</div>
 
 
-				<div class="half">
-					<label for="celular" class="label-form">Numero de Célular : 
-						<?php 
-					 if(isset($corregir['mensaje_celular'])){
-							echo '<span class=" warning">'.$corregir['mensaje_celular'].'</span>';
-					 }
-					?>
-					</label>
+				<div class="input-field half">
 					<input type="text" class="input-form text" name="celular" id="celular"
 					<?php
 					//celular
 						if(isset($_POST['celular'])){ echo "value='".$_POST['celular']."'"; }
 					?>
 					required placeholder=" 000-000">
+					<label for="celular" class="label-form">N° Célular : 
+						<?php 
+					 if(isset($corregir['mensaje_celular'])){
+							echo '<span class=" warning">'.$corregir['mensaje_celular'].'</span>';
+					 }
+					?>
+					</label>
 				</div>
 
 				<!-- fecha de nacimiento y sexo-->
@@ -162,88 +165,107 @@ function printForm($corregir){
 				</div>
 
 			
-				<label for="fecha" class="label-form">Fecha de nacimiento :
-					<?php 
-					 if(isset($corregir['mensaje_fecha'])){
-							echo '<span class=" warning">'.$corregir['mensaje_fecha'].'</span>';
-					 }
-					?>
-				</label>
+				<div class="input-field">
 
-				<input type="date" class="input-form text" name="fecha" id="fecha"
-				<?php
-					//fecha
-						if(isset($_POST['fecha'])){ echo "value='".$_POST['fecha']."'"; }
-					?>
-				required placeholder=" fecha de nacimineto">
+					<input type="text" class="datepicker" name="fecha" id="fecha"
+					<?php
+						//fecha
+							if(isset($_POST['fecha'])){ echo "value='".$_POST['fecha']."'"; }
+						?>
+					required placeholder=" fecha de nacimineto">
+
+					<label for="fecha" class="label-form">Fecha de nacimiento :
+						<?php 
+						if(isset($corregir['mensaje_fecha'])){
+								echo '<span class=" warning">'.$corregir['mensaje_fecha'].'</span>';
+						}
+						?>
+					</label>
+				</div>
 				
 
-				<label for="email" class="label-form">Correo electronico :  <span id='correo'></span>
-					<?php 
-					 if(isset($corregir['mensaje_correo'])){
-							echo '<span class=" warning">'.$corregir['mensaje_correo'].'</span>';
-					 }
-					?>
-				</label>
-				<input type="email" class="input-form text" name="email" id="email"
-				<?php
-					//email o correo electronico
-						if(isset($_POST['email'])){ echo "value='".$_POST['email']."'"; }
-					?>
-				
-				onkeyup="buscarCorreo(this)" required placeholder="Escriba su correo electronico">
+				<div class="input-field">
+					
+					<input type="email" class="input-form text" name="email" id="email"
+					<?php
+						//email o correo electronico
+							if(isset($_POST['email'])){ echo "value='".$_POST['email']."'"; }
+						?>
+					
+					onkeyup="buscarCorreo(this)" required placeholder="Escriba su correo electronico">
 
-				<label for="userName" class="label-form">Nombre de usuario : <span id='usuario'></span>
-					<?php 
-					 if(isset($corregir['mensaje_user'])){
-							echo '<span class=" warning">'.$corregir['mensaje_user'].'</span>';
-					 }
-					?>
-				</label>
+					<label for="email" class="label-form">Correo electronico :  <span id='correo'></span>
+						<?php 
+						if(isset($corregir['mensaje_correo'])){
+								echo '<span class=" warning">'.$corregir['mensaje_correo'].'</span>';
+						}
+						?>
+					</label>
 
-				<input type="text" class="input-form text" name="userName" id="userName"
-				<?php
-					//cusername
-						if(isset($_POST['userName'])){ echo "value='".$_POST['userName']."'"; }
-				?>
-				required onkeyup="buscarUsuario(this)" placeholder="Escriba su nombre de usuario">
-				
-				
-				<label id="password" class="label-form">Escriba su contraseña : 
-					<?php 
-					 if(isset($corregir['mensaje_password'])){
-							echo '<span class=" warning">'.$corregir['mensaje_password'].'</span>';
-					 }
+
+				</div>
+
+				<div class="input-field">
+					
+					<input type="text" class="input-form text" name="userName" id="userName"
+					<?php
+						//cusername
+							if(isset($_POST['userName'])){ echo "value='".$_POST['userName']."'"; }
 					?>
-				</label>
+					required onkeyup="buscarUsuario(this)" placeholder="Escriba su nombre de usuario">
+
+					<label for="userName" class="label-form">Nombre de usuario : <span id='usuario'></span>
+							<?php 
+							if(isset($corregir['mensaje_user'])){
+									echo '<span class=" warning">'.$corregir['mensaje_user'].'</span>';
+							}
+							?>
+					</label>
+
+				</div>
+				
+
 
 				<?php 
 				if(empty($_POST) )
 				{ 
-					echo "<p class='light'> debe tener al menos 8 caracteres, 1 digito, 1 mayuscula, 1 caracter especial  </p>";
+					echo "<p class='light-blue-text lighten-1-text'> debe tener al menos 8 caracteres, 1 digito, 1 mayuscula, 1 caracter especial  </p>";
 				 } 
 				else if(isset($corregir['mensaje_password']))
 				{	 echo "<p class='warning'>  debe tener al menos 8 caracteres, 1 digito, 1 mayuscula, 1 caracter especial </p>"; }
 				?>
 				
+			<div class="input-field">
 				<input type="password" class="input-form text" name="password" id="password"
-				<?php
-					//ccontraseña
-						if(isset($_POST['password'])){ echo "value='".$_POST['password']."'"; }
-				?>
-				required placeholder="Escriba su contraseña">
+					<?php
+						//ccontraseña
+							if(isset($_POST['password'])){ echo "value='".$_POST['password']."'"; }
+					?>
+					required placeholder="Escriba su contraseña">
+					<label id="password" class="label-form">Escriba su contraseña : 
+						<?php 
+						if(isset($corregir['mensaje_password'])){
+								echo '<span class=" warning">'.$corregir['mensaje_password'].'</span>';
+						}
+						?>
+					</label>
 
-				<label id="password2" class="label-form"> Repita su contraseña : <span id="mensaje-pw"></label>
+				</div>
+
+				
+			<div class="input-field">
 				<input type="password" class="input-form text " name="password2" id="password2"
-				<?php
-					//contraseña 2
-						if(isset($_POST['password2'])){ echo "value='".$_POST['password2']."'"; }
-				?>
-				required  placeholder="escriba su contraseña">
+					<?php
+						//contraseña 2
+							if(isset($_POST['password2'])){ echo "value='".$_POST['password2']."'"; }
+					?>
+					required  placeholder="escriba su contraseña">
+					<label id="password2" class="label-form"> Repita su contraseña : <span id="mensaje-pw"></label>
+			</div>
 
 				<input type="submit" class="input-form button" id="registrar" name="registrar" value="Enviar">
 			</form>
-			<a href="http://localhost/game/login.php">ya tengo cuenta</a>
+			<a href="http://localhost/game/views/login.php">ya tengo cuenta</a>
 			</div>
 		</div>
 

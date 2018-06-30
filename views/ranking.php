@@ -1,5 +1,6 @@
 
 <?php 
+
 $ruta = $_SERVER["DOCUMENT_ROOT"]."/game/config/";
 include_once($ruta.'root.php');
 
@@ -13,18 +14,18 @@ if ($_SESSION['usuario_validado']) {
 
 
 	<div class="container-table">
-		<h1 class="header-title">Listado de los mejores 20 jugadores</h1>
+		<h4 class="header-title">Listado de los mejores 20 jugadores</h4>
 		<div class="control">
 			<input type="text" name="user" placeholder="nombre de usuario">
 			<button>Buscar</button>
 		</div>
 
-		<table class="table">
-			<tr>
+		<table class="responsive-table">
+			<thead class="cyan">
 				<th>Posicion</th>
 				<th>Usuario</th>
 				<th>Puntaje</th>
-			</tr>
+			</thead>
 
 			<tr>
 					<td>informacion</td>
@@ -81,57 +82,14 @@ if ($_SESSION['usuario_validado']) {
 					<td>informacion</td>
 					<td>informacion</td>
 				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>	
+
+	
 		</table>
 	</div>
 
 <?php	
 }else{
-	header('Location: '.HOST.'/login.php?notLogged=true');
+	header('Location: '.HOST.'/views/login.php?notLogged=true');
 }
 
 ?>

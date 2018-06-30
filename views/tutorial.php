@@ -9,26 +9,23 @@
 <body>
 	
 
-<?php 
-include_once('./config.php');
+<?php
+include_once './config.php';
 
-if(isset($_SESSION['usuario_validado'])){
+if (isset($_SESSION['usuario_validado'])) {
 
-	print('
-		<link rel="stylesheet" type="text/css" href="'.HOST.'/public/css/video.css">
-
-		<div class="video">
-			<video controls id="video">
-				<source src="'.HOST.'/public/videos/1. Configuración inicial de SQL y PHP.mp4" type="video/mp4">
+		print('
+		
+			<div class="container" style="margin-top: 3%;">
+			<video controls id="video" class="responsive-video" width="auto" height="480">
+				<source src="' . HOST . '/public/videos/1. Configuración inicial de SQL y PHP.mp4" type="video/mp4">
 			</video>
-		</div>
-		
-		<script type="text/javascript">
-		
-		</script>
+			</div>
+	
+
 	');
-}else{
-	header('Location: '.VIEWS.'/login.php?notLogged=true');
+} else {
+    header('Location: ' . VIEWS . '/login.php?notLogged=true');
 }
 ?>
 
