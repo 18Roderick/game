@@ -16,6 +16,7 @@ window.onload = function () {
     buscarUsuario(inputUser);
     $('#usuario').fadeOut();
     $('#correo').fadeOut();
+    M.updateTextFields();
   }
 
 }
