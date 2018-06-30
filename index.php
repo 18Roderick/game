@@ -4,12 +4,10 @@
 		<title>Inicio</title>
 	</head>
 	<body>
-		<div>
 			<?php
-			 include_once "./header.php";
-			 	//session_destroy();
-			  ?>
-		</div>
+				include_once "./header.php";
+
+			?>
 	</body>
 </html>
 <?php

@@ -1,21 +1,24 @@
 <?php
 
-include_once 'header.php';
+include_once './config.php';
 
 if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin'])) {
 
-    require_once 'models/Usuario.php';
+    require_once ROOT . '/models/Usuario.php';
     $hashed_password = "goq5QxfSX04e.";
     $user = "";
     $password = "";
     $message_correo = "";
     $message_password = "";
     $message = "";
+    $requestRoute = VIEWS."/jugar.php";
+    $exito = 0;
 
     if (isset($_REQUEST['notLogged'])) {
+        
         print('
-					<p align="center" class="warning info-message">Para acceder necesitas iniciar sesion</p>
-				');
+            <p align="center" class="warning info-message">Para acceder necesitas iniciar sesion</p>
+		');
     }
 
     if (array_key_exists('enviar', $_POST)) {
@@ -26,18 +29,19 @@ if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin']))
         $exito = $Usuario->iniciar_sesion($user, $password);
         if ($exito > 0) {
             $_SESSION['usuario_validado'] = true;
-            header('Location: http://localhost/game/jugar.php');
+            header('Location: ' . $requestRoute);
         } else {
             $message = "<p class='warning'> correo o contraseña incorrectos</p>";
         }
 
     }
 
+
     print('
-		<link rel="stylesheet" type="text/css" href="public/css/form.css">
+		<link rel="stylesheet" type="text/css" href="' . PUBLIC_DIR . '/css/form.css">
 		<div class="main-form">
 			<div id="form-title">
-				<h2 >Iniciar Sesion</h2>
+				<h4 >Iniciar Sesion</h4>
 			</div>
 			<div class="container-form">
 
@@ -55,8 +59,8 @@ if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin']))
 				<!-- -->
 				<input type="submit" class="input-form button" name="enviar" value="Enviar">
 				</form>
-				<a href="/game/claveOlvidada.php">olvide mi contraseña</a>
-				<a href="./registrar.php">Crear usuario</a>
+				<a href="#">olvide mi contraseña</a>
+				<a href="' . VIEWS . '/registrar.php">Crear usuario</a>
 			</div>
 		</div>
 
@@ -64,6 +68,7 @@ if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin']))
 ');
 
 } else {
-    header('Location: http://localhost/game');
+    header('Location: ' . HOST);
 }
+
 ?>

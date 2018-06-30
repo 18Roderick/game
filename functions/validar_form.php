@@ -6,7 +6,9 @@ $blankRegex = '/\s/';
 $passwordRegex = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{8,15}$/';
 function validar($data)
 {
-    require_once 'models/Usuario.php';
+    $ruta = $_SERVER["DOCUMENT_ROOT"] . "/game/config/";
+    include_once $ruta . 'root.php';
+    require_once ROOT.'/models/Usuario.php';
     $validacion = 0;
 
     if (!empty($data)) {
@@ -31,7 +33,7 @@ function validar($data)
             $exito = $Usuario->existe_cedula($data['cedula']);
 
             if ($exito != 0) {
-                $corregir['mensaje_cedula'] = 'Este ya esta en uso';
+                $corregir['mensaje_cedula'] = 'ya esta en uso';
                 $validacion++;
             }
         }

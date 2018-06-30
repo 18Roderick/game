@@ -1,3 +1,34 @@
+.input-field label {
+  color: #000;
+  font-size: 20px;
+  margin-left: 0;
+}
+
+.input-field input{
+  margin-top: 2%;
+  font-size: 14px;
+}
+.input-field input[type=text] {
+  margin-top: 2%;
+  font-size: 14px;
+  padding: 0;
+}
+
+.input-field input[type=text].datepicker{
+  margin-top: 2%;
+  font-size: 14px;
+}
+
+.input-field input[type=email] {
+  margin-top: 2%;
+  font-size: 14px;
+}
+
+.input-field input[type=password] {
+  margin-top: 2%;
+  font-size: 14px;
+}
+
 .inputGroup {
   background-color: #fff;
   display: block;
@@ -80,6 +111,10 @@
   border-color: rgba(54,170, 202, .9);
 }
 
+.inputGroup label{
+  font-size: 14px;
+}
+
 
 
 
@@ -107,7 +142,7 @@
 }
 .half{
 	display: inline-block;
-	width: 49.58%;
+	width: 49%;
 	margin: 0;
 	padding: 0;
 }
@@ -129,8 +164,9 @@
 
 .input-form{
 	width: 100%;
-	margin: 1%;
+  margin: 1%;
 }
+
 
 .text{
 	margin-bottom: 5%;
