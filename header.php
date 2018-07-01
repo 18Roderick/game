@@ -60,7 +60,7 @@ if (isset($_SESSION['usuario_validado'])) {
 								<li><a href="' . VIEWS . '/tutorial.php">Tutorial</a></li>
 								<li><a href="' . VIEWS . '/ranking.php">Ranking</a></li>
 								<li><a href="' . VIEWS . '/jugar.php">Jugar</a></li>
-								<li><a href=""' . VIEWS . '/creditos.php"">Creditos</a></li>
+								<li><a href="' . VIEWS . '/creditos.php"">Creditos</a></li>
 						</ul>
 					<ul class="right hide-on-med-and-down">
 						<!-- Dropdown Trigger -->
@@ -78,7 +78,7 @@ if (isset($_SESSION['usuario_validado'])) {
 					<li><a href="' . VIEWS . '/tutorial.php">Tutorial</a></li>
 					<li><a href="' . VIEWS . '/ranking.php">Ranking</a></li>
 					<li><a href="' . VIEWS . '/jugar.php">Jugar</a></li>
-					<li><a href=""' . VIEWS . '/creditos.php"">Creditos</a></li>
+					<li><a href="' . VIEWS . '/creditos.php"">Creditos</a></li>
 				</ul>
 			
 		</div>
@@ -141,7 +141,7 @@ if (isset($_SESSION['usuario_validado'])) {
 								<li><a href="' . VIEWS . '/tutorial.php">Tutorial</a></li>
 								<li><a href="' . VIEWS . '/ranking.php">Ranking</a></li>
 								<li><a href="' . VIEWS . '/jugar.php">Jugar</a></li>
-								<li><a href=""' . VIEWS . '/creditos.php"">Creditos</a></li>
+								<li><a href="' . VIEWS . '/creditos.php"">Creditos</a></li>
 						</ul>
 				</div>
 			</nav>
@@ -151,7 +151,7 @@ if (isset($_SESSION['usuario_validado'])) {
 					<li><a href="' . VIEWS . '/tutorial.php">Tutorial</a></li>
 					<li><a href="' . VIEWS . '/ranking.php">Ranking</a></li>
 					<li><a href="' . VIEWS . '/jugar.php">Jugar</a></li>
-					<li><a href=""' . VIEWS . '/creditos.php"">Creditos</a></li>
+					<li><a href="' . VIEWS . '/creditos.php"">Creditos</a></li>
 				</ul>
 			
 		</div>
