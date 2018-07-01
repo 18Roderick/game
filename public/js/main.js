@@ -31,9 +31,17 @@ function notLogged() {
             let protocolo = window.location.protocol + '//';
             let host = window.location.hostname;
             if (result.value) {
-                window.location.assign(`${protocolo}${host}/game/login.php`);
+                window.location.assign(`${protocolo}${host}/game/views/login.php`);
             } else if (result.dismiss === swal.DismissReason.cancel) {
-                window.location.assign(`${protocolo}${host}/game/registrar.php`);
+                window.location.assign(`${protocolo}${host}/game/views/registrar.php`);
             }
         })
+}
+
+function jugar(caja, id){
+    console.log(caja, id);
+    let protocolo = window.location.protocol + '//';
+    let host = window.location.hostname;
+        window.location.assign(`${protocolo}${host}/game/views/jugar.php?start=${id}`);
+    
 }

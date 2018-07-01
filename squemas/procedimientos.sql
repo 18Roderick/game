@@ -82,3 +82,47 @@ END;
  */
 
 
+use mydb;
+drop PROCEDURE IF EXISTS datos_usuario;
+CREATE PROCEDURE `datos_usuario`(
+  IN _user VARCHAR(255),
+  IN _password varchar(255)
+)
+BEGIN
+
+    SELECT * FROM usuario as us, personal as p WHERE us.password = _password 
+    AND (us.username = _user OR p.cedula = _user OR p.correo = _user);
+
+END;
+
+
+use mydb;
+drop PROCEDURE IF EXISTS cargar_modulos;
+CREATE PROCEDURE `cargar_modulos`()
+BEGIN
+
+    SELECT * FROM modulo;
+
+END;
+
+use mydb;
+drop PROCEDURE IF EXISTS cargar_preguntas;
+CREATE PROCEDURE `cargar_preguntas`(
+  _id int
+)
+BEGIN
+
+    SELECT * FROM preguntas where unidad = _id ;
+
+END;
+
+use mydb;
+drop PROCEDURE IF EXISTS cargar_respuestas;
+CREATE PROCEDURE `cargar_respuestas`(
+  _id int
+)
+BEGIN
+
+    SELECT * FROM respuestas where pregunta_id = _id ;
+
+END;
