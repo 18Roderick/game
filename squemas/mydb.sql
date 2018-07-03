@@ -1,35 +1,57 @@
--- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 25-06-2018 a las 22:23:26
--- Versión del servidor: 10.1.13-MariaDB
--- Versión de PHP: 7.0.8
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Base de datos: `mydb`
 --
+CREATE DATABASE IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `mydb`;
 
 DELIMITER $$
 --
 -- Procedimientos
 --
+DROP PROCEDURE IF EXISTS `cargar_modulos`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cargar_modulos` ()  BEGIN
+
+    SELECT * FROM modulo;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `cargar_preguntas`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cargar_preguntas` (`_id` INT)  BEGIN
+
+    SELECT * FROM preguntas where unidad = _id ;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `cargar_respuestas`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cargar_respuestas` (`_id` INT)  BEGIN
+
+    SELECT * FROM respuestas where pregunta_id = _id ;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `datos_respuestas`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_respuestas` ()  BEGIN
+
+    SELECT * FROM respuestas;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `datos_usuario`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `datos_usuario` (IN `_user` VARCHAR(255), IN `_password` VARCHAR(255))  BEGIN
+
+    SELECT * FROM usuario as us, personal as p WHERE us.password = _password 
+    AND (us.username = _user OR p.cedula = _user OR p.correo = _user);
+
+END$$
+
+DROP PROCEDURE IF EXISTS `existe_correo`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `existe_correo` (IN `_correo` VARCHAR(255), OUT `_existe` INT)  BEGIN
   SET _existe = (
     SELECT count(`correo`) FROM personal WHERE `correo` = _correo
   );
 END$$
 
+DROP PROCEDURE IF EXISTS `existe_usuario`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `existe_usuario` (IN `_username` VARCHAR(255), OUT `_existe` INT)  BEGIN
   SET _existe = 0;
   SET _existe = (
@@ -38,6 +60,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `existe_usuario` (IN `_username` VAR
 
 END$$
 
+DROP PROCEDURE IF EXISTS `nuevo_usuario`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `nuevo_usuario` (IN `_nombre` VARCHAR(255), IN `_apellido` VARCHAR(255), IN `_sexo` CHAR(1), IN `_cedula` VARCHAR(255), IN `_celular` VARCHAR(255), IN `_correo` VARCHAR(255), IN `_fecha` DATE, IN `_username` VARCHAR(255), IN `_password` VARCHAR(255), OUT `_creado` BOOLEAN)  BEGIN
 
   DECLARE _user_exist varchar(255) DEFAULT "";
@@ -60,6 +83,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `nuevo_usuario` (IN `_nombre` VARCHA
     (`nombre`, `apellido`, `sexo`, `cedula`, `celular`, `fecha`, `correo`, `usuario_id`) 
     VALUES (_nombre, _apellido, _sexo, _cedula, _celular, _fecha, _correo, _idUser);
 
+    INSERT INTO `status` (`id_usuario`,`online`) VALUES (_idUser, 1);
     SET _creado = TRUE;
 
   END if;
@@ -70,6 +94,7 @@ END$$
 --
 -- Funciones
 --
+DROP FUNCTION IF EXISTS `fnIniciarSesion`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `fnIniciarSesion` (`_user` VARCHAR(255), `_password` VARCHAR(255)) RETURNS TINYINT(1) begin
   declare _existe boolean default false;
   declare cantidad int default 0;
@@ -84,6 +109,7 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `fnIniciarSesion` (`_user` VARCHAR(25
   return cantidad;
 end$$
 
+DROP FUNCTION IF EXISTS `fnValidarCedula`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `fnValidarCedula` (`_cedula` VARCHAR(255)) RETURNS TINYINT(1) begin
   declare _existe boolean default false;
   declare cantidad int default 0;
@@ -100,6 +126,7 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `fnValidarCedula` (`_cedula` VARCHAR(
   return _existe;
 end$$
 
+DROP FUNCTION IF EXISTS `fnValidarCorreo`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `fnValidarCorreo` (`_correo` VARCHAR(255)) RETURNS TINYINT(1) begin
   declare _existe boolean default false;
   declare cantidad int default 0;
@@ -116,6 +143,7 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `fnValidarCorreo` (`_correo` VARCHAR(
   return _existe;
 end$$
 
+DROP FUNCTION IF EXISTS `fnValidarUsuario`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `fnValidarUsuario` (`_user` VARCHAR(255)) RETURNS TINYINT(1) begin
   declare _existe boolean default false;
   declare cantidad int default 0;
@@ -140,6 +168,7 @@ DELIMITER ;
 -- Estructura de tabla para la tabla `calificacion`
 --
 
+DROP TABLE IF EXISTS `calificacion`;
 CREATE TABLE `calificacion` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) NOT NULL,
@@ -152,32 +181,10 @@ CREATE TABLE `calificacion` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `logros`
---
-
-CREATE TABLE `logros` (
-  `id` int(11) NOT NULL,
-  `logros` varchar(45) DEFAULT NULL,
-  `usuario_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `logros_has_calificacion`
---
-
-CREATE TABLE `logros_has_calificacion` (
-  `logros_id` int(11) NOT NULL,
-  `calificacion_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `modulo`
 --
 
+DROP TABLE IF EXISTS `modulo`;
 CREATE TABLE `modulo` (
   `id` int(11) NOT NULL,
   `titulo` text NOT NULL,
@@ -190,6 +197,7 @@ CREATE TABLE `modulo` (
 -- Estructura de tabla para la tabla `personal`
 --
 
+DROP TABLE IF EXISTS `personal`;
 CREATE TABLE `personal` (
   `id` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL,
@@ -203,19 +211,13 @@ CREATE TABLE `personal` (
   `usuario_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `personal`
---
-
-INSERT INTO `personal` (`id`, `nombre`, `apellido`, `sexo`, `cedula`, `celular`, `telefono`, `fecha`, `correo`, `usuario_id`) VALUES
-(13, 'roderick', 'romero', 'M', '8-910-498', '6593-2892', NULL, '1996-09-21', 'rjrr507@gmail.com', 13);
-
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `preguntas`
 --
 
+DROP TABLE IF EXISTS `preguntas`;
 CREATE TABLE `preguntas` (
   `id` int(11) NOT NULL,
   `unidad` int(11) NOT NULL,
@@ -228,6 +230,7 @@ CREATE TABLE `preguntas` (
 -- Estructura de tabla para la tabla `respuestas`
 --
 
+DROP TABLE IF EXISTS `respuestas`;
 CREATE TABLE `respuestas` (
   `id` int(11) NOT NULL,
   `pregunta_id` int(11) NOT NULL,
@@ -238,22 +241,29 @@ CREATE TABLE `respuestas` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `status`
+--
+
+DROP TABLE IF EXISTS `status`;
+CREATE TABLE `status` (
+  `id_usuario` int(11) NOT NULL,
+  `online` tinyint(1) NOT NULL DEFAULT '0',
+  `id_pregunta` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuario`
 --
 
+DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
   `tipo` char(1) NOT NULL DEFAULT 'B',
   `username` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `usuario`
---
-
-INSERT INTO `usuario` (`id`, `tipo`, `username`, `password`) VALUES
-(13, 'B', 'rjrr507', 'go3dlnYJ6v2jM');
 
 --
 -- Índices para tablas volcadas
@@ -266,21 +276,6 @@ ALTER TABLE `calificacion`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_calificacion_usuario1_idx` (`usuario_id`),
   ADD KEY `fk_calificacion_pregunta1_idx` (`pregunta_id`);
-
---
--- Indices de la tabla `logros`
---
-ALTER TABLE `logros`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_logros_usuario1_idx` (`usuario_id`);
-
---
--- Indices de la tabla `logros_has_calificacion`
---
-ALTER TABLE `logros_has_calificacion`
-  ADD PRIMARY KEY (`logros_id`,`calificacion_id`),
-  ADD KEY `fk_logros_has_calificacion_calificacion1_idx` (`calificacion_id`),
-  ADD KEY `fk_logros_has_calificacion_logros1_idx` (`logros_id`);
 
 --
 -- Indices de la tabla `modulo`
@@ -326,30 +321,25 @@ ALTER TABLE `usuario`
 ALTER TABLE `calificacion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `logros`
---
-ALTER TABLE `logros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT de la tabla `modulo`
 --
 ALTER TABLE `modulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `personal`
 --
 ALTER TABLE `personal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- Restricciones para tablas volcadas
 --
@@ -362,19 +352,6 @@ ALTER TABLE `calificacion`
   ADD CONSTRAINT `fk_calificacion_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Filtros para la tabla `logros`
---
-ALTER TABLE `logros`
-  ADD CONSTRAINT `fk_logros_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `logros_has_calificacion`
---
-ALTER TABLE `logros_has_calificacion`
-  ADD CONSTRAINT `fk_logros_has_calificacion_calificacion1` FOREIGN KEY (`calificacion_id`) REFERENCES `calificacion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_logros_has_calificacion_logros1` FOREIGN KEY (`logros_id`) REFERENCES `logros` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
 -- Filtros para la tabla `personal`
 --
 ALTER TABLE `personal`
@@ -384,7 +361,7 @@ ALTER TABLE `personal`
 -- Filtros para la tabla `respuestas`
 --
 ALTER TABLE `respuestas`
-  ADD CONSTRAINT `fk_respuesta_pregunta` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_respuesta_pregunta` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
