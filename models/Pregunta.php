@@ -79,6 +79,22 @@ class Pregunta extends Connection
         return $data;
     }
 
+    public function respuestas(){
+        $instruccion = "CALL respuestas()";
+        
+        $consulta = $this->db->query($instruccion);
+
+        if (!$consulta) {
+            echo "Error al realizar consulta <br>" . $this->db->error . "<br>";
+            echo $instruccion;
+
+        }
+
+        $data = $consulta->fetch_all(MYSQLI_ASSOC);
+        $this->db->close();
+        return $data;
+    }
+
     
 
 }

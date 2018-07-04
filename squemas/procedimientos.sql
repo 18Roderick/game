@@ -34,6 +34,7 @@ BEGIN
     (`nombre`, `apellido`, `sexo`, `cedula`, `celular`, `fecha`, `correo`, `usuario_id`) 
     VALUES (_nombre, _apellido, _sexo, _cedula, _celular, _fecha, _correo, _idUser);
 
+    INSERT INTO `status` (`id_usuario`,`online`) VALUES (_idUser, 1);
     SET _creado = TRUE;
 
   END if;
@@ -70,28 +71,17 @@ BEGIN
 
 END;
 
-/* use mydb;
-drop PROCEDURE IF exists nueva_pregunta;
-
-CREATE PROCEDURE nueva_pregunta(
-
-)
-BEGIN
-
-END;
- */
 
 
 use mydb;
 drop PROCEDURE IF EXISTS datos_usuario;
 CREATE PROCEDURE `datos_usuario`(
-  IN _user VARCHAR(255),
-  IN _password varchar(255)
+  IN _user VARCHAR(255)
 )
 BEGIN
 
-    SELECT * FROM usuario as us, personal as p WHERE us.password = _password 
-    AND (us.username = _user OR p.cedula = _user OR p.correo = _user);
+    SELECT * FROM usuario as us, personal as p WHERE 
+    us.username = _user OR p.cedula = _user OR p.correo = _user;
 
 END;
 
@@ -112,7 +102,7 @@ CREATE PROCEDURE `cargar_preguntas`(
 )
 BEGIN
 
-    SELECT * FROM preguntas where unidad = _id ;
+    SELECT * FROM preguntas where unidad = _id ORDER BY RAND();
 
 END;
 
@@ -123,6 +113,73 @@ CREATE PROCEDURE `cargar_respuestas`(
 )
 BEGIN
 
-    SELECT * FROM respuestas where pregunta_id = _id ;
+    SELECT * FROM respuestas where pregunta_id = _id ORDER BY RAND();
 
 END;
+
+
+use mydb;
+drop PROCEDURE IF EXISTS iniciar_sesion;
+CREATE PROCEDURE  iniciar_sesion( _user varchar(255), _password varchar(255) ) 
+
+begin
+    SELECT  us.username
+    FROM `usuario` AS us, `personal` as p WHERE us.password = _password 
+    AND (us.username = _user OR p.cedula = _user OR p.correo = _user);
+end;
+
+
+/*  creacion de modulo*/
+use mydb;
+drop PROCEDURE IF EXISTS crear_modulo;
+CREATE PROCEDURE  crear_modulo( _titulo text, _descripcion text ) 
+
+begin
+   INSERT INTO `modulo`(`titulo`, `descripcion`) VALUES (_titulo, _descripcion); 
+end;
+
+/* update modulo de modulo*/
+use mydb;
+drop PROCEDURE IF EXISTS actualizar_modulo;
+CREATE PROCEDURE  actualizar_modulo(_id int, _titulo text, _descripcion text ) 
+
+begin
+   UPDATE `modulo` SET `titulo` = _titulo , `descripcion` = _descripcion WHERE `id` = _id; 
+end;
+
+/* borrar modulo */
+use mydb;
+drop PROCEDURE IF EXISTS borrar_modulo;
+CREATE PROCEDURE  borrar_modulo(_id int) 
+
+begin
+   DELETE FROM `modulo` WHERE `id` = _id; 
+end;
+
+
+
+/*  */
+
+use mydb;
+drop PROCEDURE IF EXISTS consultar_repuesta;
+CREATE PROCEDURE  consultar_repuesta(_id int) 
+
+begin
+  SELECT * FROM `respuestas` WHERE `id` = _id; 
+end;
+
+
+use mydb;
+drop PROCEDURE IF EXISTS respuestas;
+CREATE PROCEDURE  respuestas() 
+
+begin
+  SELECT `opcion`, `correcta`, `pregunta_id`, `id` FROM `respuestas` ;
+end;
+
+
+
+use mydb;
+
+
+

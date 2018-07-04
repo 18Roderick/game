@@ -99,19 +99,3 @@ SELECT fnIniciarSesion('8-910-498', 'rj3wmlDjxFM02');
 
 
 
-drop function if exists fnDatosUsuario;
-
-create function fnDatosUsuario( _user varchar(255), _password varchar(255) ) returns varchar
-
-begin
-  declare _existe boolean default false;
-  declare cantidad int default 0;
-
-  set cantidad = (
-    SELECT * FROM usuario as us, personal as p WHERE us.password = _password 
-    AND (us.username = _user OR p.cedula = _user OR p.correo = _user)
-
-    ); 
-  
-  return cantidad;
-end;

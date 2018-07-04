@@ -107,8 +107,8 @@ class Usuario extends Connection
     {
         $user = $this->db->real_escape_string($user);
         $password = $this->db->real_escape_string($password);
-        $function = "fnIniciarSesion";
-        $instruccion = "SELECT " . $function . "('" . $user . "', '".$password."') as alias";
+        $function = "iniciar_sesion";
+        $instruccion = "CALL " . $function . "('" . $user . "', '".$password."')";
 
         $consulta = $this->db->query($instruccion);
 
@@ -118,12 +118,29 @@ class Usuario extends Connection
 
         }
 
-        $data = $consulta->fetch_assoc();
+        $data = $consulta->fetch_all(MYSQLI_ASSOC);
         $this->db->close();
-        return $data["alias"];
+        return $data;
 
     }
 
+    public function datos_usuario($correo){
+        $user = $this->db->real_escape_string($correo);
+        $function = "datos_usuario";
+        $instruccion = "CALL " . $function . "('" . $correo . "')";
+
+        $consulta = $this->db->query($instruccion);
+
+        if (!$consulta) {
+            echo "Error al realizar consulta <br>" . $this->db->error . "<br>";
+            echo $instruccion;
+
+        }
+
+        $data = $consulta->fetch_all(MYSQLI_ASSOC);
+        $this->db->close();
+        return $data;
+    }
 
     public function injection($data)
     {
