@@ -27,7 +27,9 @@ if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin']))
         $password = crypt($_POST['password'], $hashed_password);
 
         $exito = $Usuario->iniciar_sesion($user, $password);
-        if ($exito > 0) {
+        if (count($exito) > 0) {
+
+            setcookie('user', utf8_encode($exito[0]['username']), time() + (86400 * 30), "/");
             $_SESSION['usuario_validado'] = true;
             header('Location: ' . $requestRoute);
         } else {
@@ -47,19 +49,24 @@ if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin']))
 
 				<form action="./login.php" class="form" method="POST" onsubmit="return validateLogin()">
 
-				<label for="user" class="label-form">Nombre de usuario, cedula o correo : </label>
-				<input type="text" class="input-form text" name="user"
-				value="' . $user . '" id="user" placeholder="Escriba su usuario, su cedula o correo">
+                <div class="input-field">
+                    <input type="text" class="input-form text" name="user"
+				    value="' . $user . '" id="user" placeholder="Escriba su usuario, su cedula o correo">
+                    <label for="user" class="label-form">Nombre de usuario, cedula o correo : </label>
+                </div>
 
-				<label for="password" class="label-form">Apellido :</label>
-				<input type="password" class="input-form text" name="password"
-				value="' . $password . '" id="password" placeholder="*********">
+				
+                <div clas="input-field">
+                    <input type="password" class="input-form text" name="password"
+                    value="' . $password . '" id="password" placeholder="*********">
+                    <label for="password" class="label-form">contraseña :</label>
+                </div>
 				<!-- mensaje del server-->
 				' . $message . '
 				<!-- -->
 				<input type="submit" class="input-form button" name="enviar" value="Enviar">
 				</form>
-				<a href="#">olvide mi contraseña</a>
+				<a href="./resetPassword.php">olvide mi contraseña</a>
 				<a href="' . VIEWS . '/registrar.php">Crear usuario</a>
 			</div>
 		</div>

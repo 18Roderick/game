@@ -65,7 +65,7 @@ if (isset($_SESSION['usuario_validado'])) {
 					<ul class="right hide-on-med-and-down">
 						<!-- Dropdown Trigger -->
 						<li>
-							<a class="dropdown-trigger " href="javascript:void(0);" data-target="dropdown1">Roderick Romero
+							<a class="dropdown-trigger " href="javascript:void(0);" data-target="dropdown1">'.$_COOKIE['user'].'
 							
 							</a>
 						</li>
