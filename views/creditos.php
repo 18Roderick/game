@@ -100,7 +100,7 @@ print('
         </div>
         <div class="card-content">
           <p>Edad: 24 años</br>
-          Correo:deivis93@live.com</br>
+          Correo: deivis93@live.com</br>
           Carrera: Licenciatura en Desarrollo de Software.
           </p>
         </div>
