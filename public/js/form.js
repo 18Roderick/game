@@ -87,7 +87,7 @@ function onCorreo(response) {
     validator.correo = true;
   } else {
     $('#correo').addClass('warning').removeClass('succes');
-    $('#correo').html('este correo ya esta siendo utilizado');
+    $('#correo').html('ya existe');
     validator.correo = false;
   }
 

@@ -35,6 +35,7 @@ BEGIN
     VALUES (_nombre, _apellido, _sexo, _cedula, _celular, _fecha, _correo, _idUser);
 
     INSERT INTO `status` (`id_usuario`,`online`) VALUES (_idUser, 1);
+    INSERT INTO `ranking` (`id_usuario`) VALUES(_idUser, 1)
     SET _creado = TRUE;
 
   END if;
@@ -177,6 +178,29 @@ begin
   SELECT `opcion`, `correcta`, `pregunta_id`, `id` FROM `respuestas` ;
 end;
 
+
+use mydb;
+
+drop PROCEDURE if exists actualizar_puntaje;
+
+CREATE PROCEDURE actualizar_puntaje(
+  _user VARCHAR(255),
+  _puntaje int
+  
+  )
+begin
+
+end;
+
+/*cargar ranking */
+use mydb;
+
+drop PROCEDURE if exists cargar_ranking;
+
+CREATE PROCEDURE cargar_ranking()
+begin
+  SELECT u.username, r.puntaje  FROM `ranking` as r, `usuario` as u ORDER BY r.puntaje ASC;
+end;
 
 
 

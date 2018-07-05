@@ -17,7 +17,7 @@ if($_SESSION['usuario_validado']){
   if (isset($_REQUEST['start'])) {
     $id = $_REQUEST['start'];
     print('
-        <p align="center" class="succes info-message">Iniciando juego</p>
+        <span id="modulo" style="display: none">'.$id.'</span>
     ');
 
 
@@ -26,10 +26,26 @@ if($_SESSION['usuario_validado']){
     $preguntas = $NewPregunta->cargar_preguntas($id);
     //echo var_dump($preguntas);
     $cont = 0;
+    
+
+
     foreach ($preguntas as $key2 => $pregunta) {
-        print('<div class="row game">');
+      if($cont < 1){
+        print('
+        <div class="row">
+          <div class="z-depth-1 col s12 m6 l6 offset-l3">
+          <br>
+          <span id="avance"></span>   <span id="puntaje"></span>
+          <br>
+          <br>
+          </div>
+        </div>
+      ');
+      }
+
+        print('<div class="row game" style="display:none;">');
         print('<div class="z-depth-4 col s12 m6 l6 offset-l3">');
-          print('');
+
           print('
           <div class="row">
             <div class="col m11 s10">
@@ -79,6 +95,7 @@ if($_SESSION['usuario_validado']){
           print('</form>');
 
           print('
+            <br>
             <div class="row">
             <div class="center-align">
 
