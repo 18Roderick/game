@@ -1,95 +1,63 @@
 
-<?php 
+<?php
 
-$ruta = $_SERVER["DOCUMENT_ROOT"]."/game/config/";
-include_once($ruta.'root.php');
+$ruta = $_SERVER["DOCUMENT_ROOT"] . "/game/config/";
+include_once $ruta . 'root.php';
 
-include_once( ROOT.'/header.php');
+include_once ROOT . '/header.php';
 
-print('<link rel="stylesheet" type="text/css" href="'.PUBLIC_DIR.'/css/table.css">');
+require_once ROOT.'/models/Usuario.php';
 
+//print('<link rel="stylesheet" type="text/css" href="' . PUBLIC_DIR . '/css/table.css">');
 
 if ($_SESSION['usuario_validado']) {
-?>
 
+	$Ranking = new Usuario();
 
-	<div class="container-table">
-		<h4 class="header-title">Listado de los mejores 20 jugadores</h4>
-		<div class="control">
-			<input type="text" name="user" placeholder="nombre de usuario">
-			<button>Buscar</button>
+	$ranking = $Ranking->cargar_ranking();
+	//echo var_dump($preguntas);
+	$cont = 1;
+
+    print('
+		<div class="container">
+		<h4  algin="center">Listado de los mejores 20 jugadores</h4>
+		<div class="control input-field">
+			<input type="text" name="user" id="user" placeholder="Escriba el nombre de usuario">
+			<label for id="user"></label>
 		</div>
 
-		<table class="responsive-table">
-			<thead class="cyan">
+		<table class="responsive-table highlight centered">
+			<thead>
 				<th>Posicion</th>
 				<th>Usuario</th>
 				<th>Puntaje</th>
 			</thead>
+	');
 
-			<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
-				<tr>
-					<td>informacion</td>
-					<td>informacion</td>
-					<td>informacion</td>
-				</tr>
 
+		if(count($ranking) > 0){
+			foreach ($ranking as $key => $usuario) {
+				print('
+				<tr>
+				<td>'.$cont.'</td>
+				<td>'.$usuario['username'].'</td>
+				<td>'.$usuario['puntaje'].'</td>
+				</tr>
 	
-		</table>
-	</div>
+				');
+			}
 
-<?php	
-}else{
-	header('Location: '.HOST.'/views/login.php?notLogged=true');
+			$cont++;
+		}
+
+
+    print('
+			</table>
+		</div>
+	');
+
+} else {
+    header('Location: ' . HOST . '/views/login.php?notLogged=true');
 }
 
 ?>

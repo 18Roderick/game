@@ -79,6 +79,7 @@ if (isset($_SESSION['usuario_validado'])) {
 					<li><a href="' . VIEWS . '/ranking.php">Ranking</a></li>
 					<li><a href="' . VIEWS . '/jugar.php">Jugar</a></li>
 					<li><a href="' . VIEWS . '/creditos.php"">Creditos</a></li>
+					<li><a href="' . VIEWS . '/logout.php"">Cerra sesion</a></li>
 				</ul>
 			
 		</div>

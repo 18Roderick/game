@@ -2,6 +2,10 @@
 
 include_once './config.php';
 
+print('<link rel="stylesheet" type="text/css" href="'.PUBLIC_DIR.'/css/form.css">');
+print('<script src="'.HOST.'/public/js/form.js"></script>');
+
+
 if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin'])) {
 
     require_once ROOT . '/models/Usuario.php';
@@ -40,7 +44,6 @@ if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin']))
 
 
     print('
-		<link rel="stylesheet" type="text/css" href="' . PUBLIC_DIR . '/css/form.css">
 		<div class="main-form">
 			<div id="form-title">
 				<h4 >Iniciar Sesion</h4>
@@ -50,13 +53,15 @@ if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin']))
 				<form action="./login.php" class="form" method="POST" onsubmit="return validateLogin()">
 
                 <div class="input-field">
+                    <br>
                     <input type="text" class="input-form text" name="user"
 				    value="' . $user . '" id="user" placeholder="Escriba su usuario, su cedula o correo">
                     <label for="user" class="label-form">Nombre de usuario, cedula o correo : </label>
                 </div>
 
 				
-                <div clas="input-field">
+                <div class="input-field">
+                    <br>
                     <input type="password" class="input-form text" name="password"
                     value="' . $password . '" id="password" placeholder="*********">
                     <label for="password" class="label-form">contraseña :</label>

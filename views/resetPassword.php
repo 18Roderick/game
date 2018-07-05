@@ -4,6 +4,8 @@ include_once './config.php';
 
 require_once ROOT . '/models/Usuario.php';
 
+
+
 $message = "";
 $hashed_password = "goq5QxfSX04e.";
 $exito = 0;
@@ -17,17 +19,22 @@ if (array_key_exists('enviar', $_POST)) {
     if ($exito > 0) {
         print('correo valido');
         $Usuario = new Usuario();
-        $password1 = $Usuario->datos_usuario($correo)[0]['password'];
-        $password = crypt($password1, $hashed_password);
+		//$user_id_sql= $this->db->query("select id from usuario where username ='".$Usuario."'");
+        $password1 = "123456789";
+        $password = crypt($password1 , $hashed_password);
+		//$db=mysqli_query("update usuario set password ='".$password."' where id ='".$user_id_sql."'");
 
-        $mail = "Prueba de mensaje";
+        $mail = $correo;
           //Titulo
-        $titulo = "PRUEBA DE TITULO";
+        $titulo = "Reset de Contraseña";
         //cabecera
         $headers = "MIME-Version: 1.0\r\n";
         $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-        //dirección del remitente
+		 //dirección del remitente
         $headers .= "From: Daslearn < rode_rick@live.com >\r\n";
+		//contenido del mensaje
+		$msg="Su Clave a sido restaurada a : ". $password1 . ". \nRecuerde acceder a su perfil para cambiar la contraseña.";
+		$msg = wordwrap($msg,70);
         //Enviamos el mensaje a tu_dirección_email
         $bool = mail($correo, $titulo, $mail, $headers);
         if ($bool) {

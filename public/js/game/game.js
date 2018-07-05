@@ -1,11 +1,15 @@
-const cargarPreguntas = "cargar_preguntas.php";
 let preguntas = "";
 let repuestas = "";
 let dataGame = "";
 let containerDiv = "";
+let puntaje = 0;
 let anterior = 0;
 let size = 0;
 let inicio = 0;
+let xp = 0;
+
+const limitePregunta = 5;
+const cargarPreguntas = "cargar_preguntas.php";
 const URL = archivo => {
   const protocolo = window.location.protocol + "//";
   const host = window.location.hostname;
@@ -44,12 +48,26 @@ function getData(file, data) {
 }
 
 $(() => {
-  getData(cargarPreguntas, { id: 1 });
-  $('.verificando').slideUp();
+  let modulo = $('#modulo').text();
   containerDiv = $(".game");
   inicio = 0;
   size = containerDiv.length;
+
+  getData(cargarPreguntas, { id: 1 });
   prepararDivs();
+
+  $('.verificando').slideUp();
+  $('#avance').text(`Pregunta ${inicio+1} de ${limitePregunta}`);
+  $('#puntaje').text(`Puntaje ${puntaje}`);
+
+  if(modulo == 1){
+    xp = 10;
+  }else if(modulo == 2){
+    xp = 15;
+  }else{
+    xp = 20;
+  }
+  
 });
 
 
@@ -62,26 +80,29 @@ function verificar(id) {
   
   let radio = containerDiv[inicio].querySelectorAll('input'); 
   let loader = containerDiv[inicio].querySelectorAll('.verificando'); 
-  
+  let tituloPregunta = containerDiv[inicio].querySelectorAll('p')[0];
+  tituloPregunta = $(tituloPregunta).text();
+  let label = 0;
+
   radio.forEach( elemen => {
    
     if(elemen.checked){
 
       $(loader).css('display','block');
       console.log(elemen);
+      label = $(`[for='${elemen.id}']`).text();
       let res = dataGame[parseInt(elemen.id)].correcta;
 
       if(res){
         console.log('Respuesta correcta');
-        success();
+        success(tituloPregunta , elemen, label);
       }else{
-        fail();
+        fail(tituloPregunta , elemen, label);
       }
 
       $(loader).css('display', 'none');
       
-      setTimeout(() => {
-      },500);
+ 
 
     }
   });
@@ -90,9 +111,20 @@ function verificar(id) {
 function siguiente() {
   $(containerDiv[inicio]).slideUp(300, () => {
     inicio = (inicio < size-1) ? inicio + 1 : 0;
-    $(containerDiv[inicio]).slideDown(300);
-  });
 
+    if(inicio == limitePregunta){
+      window.location.assign(`${window.location.href}`);
+    }else{
+      $(containerDiv[inicio]).slideDown(300);
+      $('#avance').text(`Pregunta ${inicio+1} de ${limitePregunta}`);
+      $('#puntaje').text(`Puntaje ${puntaje}`);
+
+    }
+
+
+  
+  });
+  
 }
 
 function prepararDivs() {
@@ -104,20 +136,40 @@ function prepararDivs() {
   $(containerDiv[inicio]).css("display", "block");
 }
 
-function success(){
-  swal(
-    'Bien hecho! '+getCookie('user'),
-    'Tu eleccion es la correcta!',
-    'success'
-  )
+function success(titulo , elemen, text){
+  swal({
+    title:'Bien hecho! ' + getCookie('user'),
+    text:'Tu eleccion es la correcta!',
+    type:'success',
+    html: `
+      <p>${titulo}</p>
+      <ul> <li >${text}</li>   </ul>
+      <h3>+${xp}</h3>
+    `
+  })
+  .then( () => { 
+    console.log(titulo, text);
+    puntaje += xp;
+    elemen.checked = false;
+    siguiente();
+  });
 }
 
-function fail(){
+function fail(titulo, elemen, text){
   swal({
     type: 'error',
     title: 'Oops...',
     text: 'Respuesta incorrecta!',
+    html: `
+    <p>${titulo}</p>
+    <ul> <li >${text}</li>   </ul>
+  `
   })
+  .then( () => { 
+    console.log(titulo, text);
+    elemen.checked = false;
+    siguiente();
+  });
 }
 function getCookie(cname) {
   var name = cname + "=";

@@ -142,6 +142,25 @@ class Usuario extends Connection
         return $data;
     }
 
+    
+    public function cargar_ranking(){
+
+        $function = "cargar_ranking";
+        $instruccion = "CALL " . $function . "()";
+
+        $consulta = $this->db->query($instruccion);
+
+        if (!$consulta) {
+            echo "Error al realizar consulta <br>" . $this->db->error . "<br>";
+            echo $instruccion;
+
+        }
+
+        $data = $consulta->fetch_all(MYSQLI_ASSOC);
+        $this->db->close();
+        return $data;
+    }
+
     public function injection($data)
     {
         return $this->db->real_escape_string($data);
