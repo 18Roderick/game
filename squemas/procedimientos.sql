@@ -22,7 +22,7 @@ BEGIN
     );
 
   IF _user_exist = _username then
-      set _creado = FALSE;
+      set _creado = 0;
   ELSE 
     insert into `usuario`(`username`, `password`) values (_username, _password);
     
@@ -35,8 +35,8 @@ BEGIN
     VALUES (_nombre, _apellido, _sexo, _cedula, _celular, _fecha, _correo, _idUser);
 
     INSERT INTO `status` (`id_usuario`,`online`) VALUES (_idUser, 1);
-    INSERT INTO `ranking` (`id_usuario`) VALUES(_idUser, 1);
-    SET _creado = TRUE;
+    INSERT INTO `ranking` (`id_usuario`) VALUES(_idUser);
+    SET _creado = 1;
 
   END if;
 
@@ -199,7 +199,7 @@ drop PROCEDURE if exists cargar_ranking;
 
 CREATE PROCEDURE cargar_ranking()
 begin
-  SELECT u.username, r.puntaje  FROM `ranking` as r, `usuario` as u ORDER BY r.puntaje ASC;
+  SELECT DISTINCT(u.username), r.puntaje  FROM `ranking` as r, `usuario` as u ORDER BY r.puntaje ASC;
 end;
 
 

@@ -1,22 +1,23 @@
 <?php
+require_once '../models/config.php';
 class Create_database
 {
 	protected $pdo;
 	
 	public function __construct()
 	{
-		$this->pdo = new PDO("mysql:host=localhost;", "root", "");
+		$this->pdo = new PDO("mysql:host=".DB_HOST.";", DB_USER , PASSWORD);
 	}
 	//creamos la base de datos y las tablas que necesitemos
 	public function my_db()
 	{
         //creamos la base de datos si no existe
-		$crear_db = $this->pdo->prepare('CREATE DATABASE IF NOT EXISTS mydb COLLATE utf8_spanish_ci');							  
+		$crear_db = $this->pdo->prepare('CREATE DATABASE IF NOT EXISTS prueba COLLATE utf8_spanish_ci');							  
 		$crear_db->execute();
 		
 		//decimos que queremos usar la tabla que acabamos de crear
 		if($crear_db):
-		$use_db = $this->pdo->prepare('USE mydb');						  
+		$use_db = $this->pdo->prepare('USE prueba');						  
 		$use_db->execute();
 		endif;
 		
