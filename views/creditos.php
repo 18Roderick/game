@@ -17,7 +17,7 @@ print('
     <div class="col s12 m4">
       <div class="card">
         <div class="card-image">
-          <img src="imagenes/aldair20.jpg">
+          <img src="imagenes/aldair20.jpg" height="500px">
           <span class="card-title">Aldair Duque</span>
         </div>
         <div class="card-content">
@@ -35,7 +35,7 @@ print('
         <div class="col s12 m4">
       <div class="card">
         <div class="card-image">
-          <img src="imagenes/roderick.jpeg">
+          <img src="imagenes/roderick.jpeg" height="500px">
           <span class="card-title">Roderick Romero</span>
         </div>
         <div class="card-content">
@@ -54,7 +54,7 @@ print('
         <div class="col s12 m4">
       <div class="card">
         <div class="card-image">
-          <img src="imagenes/aldhier.jpg">
+          <img src="imagenes/aldhier.jpg" height="500px">
           <span class="card-title">Aldhier Torres</span>
         </div>
         <div class="card-content">
@@ -76,7 +76,7 @@ print('
     <div class="col s12 m4">
       <div class="card">
         <div class="card-image">
-          <img src="imagenes/Jonhy.jpg">
+          <img src="imagenes/Jonhy.jpg" height="500px">
           <span class="card-title">Juan Samudio</span>
         </div>
         <div class="card-content">
@@ -95,7 +95,7 @@ print('
     <div class="col s12 m4">
       <div class="card">
         <div class="card-image">
-          <img src="imagenes/deivy.jpeg">
+          <img src="imagenes/deivy.jpeg" height="500px">
           <span class="card-title">Deyvi Morales</span>
         </div>
         <div class="card-content">
