@@ -4,4 +4,6 @@
   define('PUBLIC_DIR', "http://".$_SERVER['HTTP_HOST']."/game/public");
   define('VIEWS', "http://".$_SERVER['HTTP_HOST']."/game/views");
 
+
+
 ?>
