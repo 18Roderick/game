@@ -35,7 +35,7 @@ BEGIN
     VALUES (_nombre, _apellido, _sexo, _cedula, _celular, _fecha, _correo, _idUser);
 
     INSERT INTO `status` (`id_usuario`,`online`) VALUES (_idUser, 1);
-    INSERT INTO `ranking` (`id_usuario`) VALUES(_idUser, 1)
+    INSERT INTO `ranking` (`id_usuario`) VALUES(_idUser, 1);
     SET _creado = TRUE;
 
   END if;
