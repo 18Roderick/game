@@ -4,9 +4,7 @@ include_once($ruta.'root.php');
 
 include_once( ROOT.'/header.php');
 
-print('
-
-');
+print('<title>Creditos</title>');
 
 ?>
 

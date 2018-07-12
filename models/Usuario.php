@@ -124,6 +124,27 @@ class Usuario extends Connection
 
     }
 
+
+    public function logout($idUser){
+        $user = $this->db->real_escape_string($idUser);
+        $function = "logout";
+        $instruccion = "CALL " . $function . "('" . $idUser . "')";
+
+        $consulta = $this->db->query($instruccion);
+
+        if (!$consulta) {
+            echo "Error al realizar consulta <br>" . $this->db->error . "<br>";
+            echo $instruccion;
+            $this->db->close();
+            return false;
+
+        }
+
+        $this->db->close();
+        return true;
+
+    }
+
     public function datos_usuario($correo){
         $user = $this->db->real_escape_string($correo);
         $function = "datos_usuario";

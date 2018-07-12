@@ -8,6 +8,8 @@ include_once ROOT . '/header.php';
 
 require_once ROOT.'/models/Usuario.php';
 
+print('<title>Ranking</title>');
+
 //print('<link rel="stylesheet" type="text/css" href="' . PUBLIC_DIR . '/css/table.css">');
 
 if ($_SESSION['usuario_validado']) {
@@ -45,9 +47,10 @@ if ($_SESSION['usuario_validado']) {
 				</tr>
 	
 				');
+				$cont++;
 			}
 
-			$cont++;
+			
 		}
 
 

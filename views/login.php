@@ -1,7 +1,7 @@
 <?php
 
 include_once './config.php';
-
+print('<title>Login</title>');
 print('<link rel="stylesheet" type="text/css" href="'.PUBLIC_DIR.'/css/form.css">');
 print('<script src="'.HOST.'/public/js/form.js"></script>');
 
@@ -32,12 +32,18 @@ if (!isset($_SESSION['usuario_validado']) && !isset($_SESSION['usuario_admin']))
 
         $exito = $Usuario->iniciar_sesion($user, $password);
         if (count($exito) > 0) {
+
             if(isset($_COOKIE['user'])){
                 setcookie("user", "", time() - 3600);
             }
+
             setcookie('user', utf8_encode($exito[0]['username']), time() + (86400 * 30), "/");
             $_SESSION['usuario_validado'] = $exito[0]['username'];
-            $USERLOGIN = 
+            $Usuario = new Usuario();
+
+            $exito = $Usuario->logout($exito[0]['username']);
+            
+            
             header('Location: ' . $requestRoute);
         } else {
             $message = "<p class='warning'> correo o contraseña incorrectos</p>";

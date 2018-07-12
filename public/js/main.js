@@ -1,4 +1,7 @@
 $(() => {
+
+    
+
     $(".dropdown-trigger").dropdown({ hover: false });
     $('.sidenav').sidenav();
     $('.datepicker').datepicker({
@@ -12,7 +15,38 @@ $(() => {
         $('#myDropdown').toggleClass("show");
         console.log(this);
     });
+
+
+
+    
+
 });
+
+const puntajeFile = 'consultar_puntaje.php';
+
+function consultarPuntaje(data){
+    $.ajax({
+        data,
+        url: URL(puntajeFile),
+        type: "POST",
+        beforeSend: () => { },
+        dataFilter: (response, type) => {
+          return JSON.parse(response);
+        },
+        success: response => {
+          console.log(response)
+         
+          if (response.status) {
+            console.log('puntaje actualizado');
+            return response;
+          }
+        },
+        complete: () => {
+          console.log("final de actualizacion");
+        }
+      });
+
+}
 
 
 function notLogged() {
@@ -39,6 +73,7 @@ function notLogged() {
 }
 
 function jugar(caja, id){
+
     console.log(caja, id);
     let protocolo = window.location.protocol + '//';
     let host = window.location.hostname;
