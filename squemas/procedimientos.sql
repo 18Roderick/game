@@ -16,6 +16,8 @@ BEGIN
 
   DECLARE _user_exist varchar(255) DEFAULT "";
   DECLARE _idUser int DEFAULT 0;
+  DECLARE _cantidad int DEFAULT 0;
+  DECLARE _idModulo int DEFAULT 0;
 
   SET _user_exist = (  
     SELECT username   FROM `usuario`  where username = _username 
@@ -36,6 +38,18 @@ BEGIN
 
     INSERT INTO `status` (`id_usuario`,`online`) VALUES (_idUser, 1);
     INSERT INTO `ranking` (`id_usuario`) VALUES(_idUser);
+
+    set _idModulo = (
+      SELECT id from modulo LIMIT 1
+    );
+
+    set _cantidad = (
+      SELECT COUNT(`preguntas`) from preguntas WHERE unidad = _idModulo
+    );
+
+    INSERT INTO `completo` 
+      (`id_usuario`, `unidad`, `cantidad_preguntas`, `cantidad_respondidas`)
+      VALUES (_idUser, _idModulo, _cantidad, 0);
     SET _creado = 1;
 
   END if;
@@ -80,9 +94,11 @@ CREATE PROCEDURE `datos_usuario`(
   IN _user VARCHAR(255)
 )
 BEGIN
-
-    SELECT * FROM usuario as us, personal as p WHERE 
-    us.username = _user OR p.cedula = _user OR p.correo = _user;
+    SELECT u.id as `usuario_id` ,p.nombre, p.apellido, p.celular, p.correo, u.username, r.puntaje
+    from personal as p
+    inner join usuario as u on p.usuario_id = u.id
+    inner join ranking as r on p.usuario_id = r.id_usuario  WHERE 
+    u.username = _user OR p.cedula = _user OR p.correo = _user;
 
 END;
 
@@ -189,8 +205,101 @@ CREATE PROCEDURE actualizar_puntaje(
   
   )
 begin
+  DECLARE _puntajeActual int;
+  
+  DECLARE _id int;
+  SET _id = (
+    SELECT `id` from `usuario` where `username` = _user
+  );
+
+  SET _puntajeActual = _puntaje + (
+    SELECT `puntaje` from `ranking` where `id_usuario` = _id
+  );
+
+  UPDATE `ranking` SET `puntaje` = _puntajeActual where `id_usuario` = _id;
 
 end;
+
+
+use mydb; 
+drop PROCEDURE if exists consultar_puntaje;
+
+CREATE PROCEDURE consultar_puntaje(_user VARCHAR(255))
+begin
+  DECLARE _id int;
+  SET _id = (
+    SELECT `id` from `usuario` where `username` = _user
+  );
+
+  SELECT `puntaje` from `ranking` where `id_usuario` = _id;
+
+
+end;
+
+
+/* consultar progreso*/
+use mydb; 
+drop PROCEDURE if exists consultar_progreso;
+
+CREATE PROCEDURE consultar_progreso(_user VARCHAR(255))
+begin
+  DECLARE _id int;
+  SET _id = (
+    SELECT `id` from `usuario` where `username` = _user
+  );
+
+  SELECT * from `completo` where `id_usuario` = _id;
+
+
+end;
+
+/* actualizar la tabla progreso*/
+
+use mydb;
+
+drop PROCEDURE if exists actualizar_progreso;
+
+CREATE PROCEDURE actualizar_progreso(
+  _user VARCHAR(255),
+  _idPregunta int
+  
+  )
+begin
+  DECLARE _existe  int;
+  DECLARE _id int;
+  DECLARE _idModulo int DEFAULT 0;
+  DECLARE _cantidad int DEFAULT 0;
+
+  SET _id = (
+    SELECT `id` from `usuario` where `username` = _user
+  );
+
+  SET _existe = (
+     SELECT COUNT(`id_pregunta`) as cantidad from `progreso` 
+     where `id_usuario` = _id and `id_pregunta` = _idPregunta
+  );
+
+  IF _existe < 1 then
+    INSERT INTO `progreso` (`id_usuario`, `id_pregunta`,`acierto`) VALUES
+    (_id, _idPregunta, 1);
+
+    set _idModulo = (
+      SELECT unidad from `preguntas` where `id` = _idPregunta 
+    );
+
+    set _cantidad = 1 + (
+      SELECT `cantidad_respondidas` from `completo`
+       where `id_usuario` = _id  AND `unidad` = _idModulo 
+    );
+
+    UPDATE `completo` SET `cantidad_respondidas` = _cantidad;
+
+  END IF;
+  
+
+end;
+
+
 
 /*cargar ranking */
 use mydb;
@@ -199,11 +308,52 @@ drop PROCEDURE if exists cargar_ranking;
 
 CREATE PROCEDURE cargar_ranking()
 begin
-  SELECT DISTINCT(u.username), r.puntaje  FROM `ranking` as r, `usuario` as u ORDER BY r.puntaje ASC;
+  SELECT usuario.username, ranking.puntaje from usuario 
+  INNER JOIN ranking ON usuario.id = ranking.id_usuario ORDER BY ranking.puntaje DESC limit 20;
 end;
 
 
+/* log out de usuario*/
+use mydb;
+
+drop PROCEDURE if exists logout;
+
+CREATE PROCEDURE logout(_idUser varchar(255))
+BEGIN
+  DECLARE _online int;
+  DECLARE _id int;
+  SET _id = (
+    SELECT `id` from `usuario` where `username` = _idUser
+  );
+
+  SET _online = (
+    SELECT `online` from `status` where `id_usuario` = _id
+  );
+
+  IF _online > 0 then
+    UPDATE `status` SET `online`= 0 WHERE `id_usuario` = _id;
+  ELSE
+    UPDATE `status` SET `online`= 1 WHERE `id_usuario` = _id;
+  
+  END IF;
+
+END;
 
 
+
+/* log out de usuario*/
+use mydb;
+
+drop PROCEDURE if exists porcentaje;
+
+CREATE PROCEDURE porcentaje(_user varchar(255), _idModulo int)
+BEGIN
+  DECLARE _totalPreguntas int ;
+
+  set _totalPreguntas = (
+    SELECT COUNT(`preguntas`) from preguntas where `unidad` = _idModulo
+  );
+  
+END;
 
 

@@ -109,14 +109,6 @@ if (isset($_SESSION['usuario_validado'])) {
 								<li><a href="' . VIEWS . '/mantenimiento.php">Temas</a></li>
 								<li><a href="' . VIEWS . '/tutorial.php">Tutorial</a></li>
 						</ul>
-					<ul class="right hide-on-med-and-down">
-						<!-- Dropdown Trigger -->
-						<li>
-							<a class="dropdown-trigger " href="javascript:void(0);" data-target="dropdown1">Roderick Romero
-							
-							</a>
-						</li>
-					</ul>
 				</div>
 			</nav>
 			<ul class="sidenav" id="mobile-demo">
@@ -131,33 +123,62 @@ if (isset($_SESSION['usuario_validado'])) {
 ');
 
 } else {
-    print('
-		<div class="navbar-game">
-			<nav>
-				<div class="nav-wrapper  cyan flow-text">
-						<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-						<ul id="nav-mobile" class="left hide-on-med-and-down">
-								<li><a href="' . HOST . '/">Inicio</a></li>
-								<li><a href="' . VIEWS . '/temas.php">Temas</a></li>
-								<li><a href="' . VIEWS . '/tutorial.php">Tutorial</a></li>
-								<li><a href="' . VIEWS . '/ranking.php">Ranking</a></li>
-								<li><a href="' . VIEWS . '/jugar.php">Jugar</a></li>
-								<li><a href="' . VIEWS . '/creditos.php"">Creditos</a></li>
-						</ul>
-				</div>
-			</nav>
-			<ul class="sidenav" id="mobile-demo">
-					<li><a href="' . HOST . '/">Inicio</a></li>
-					<li><a href="' . VIEWS . '/temas.php">Temas</a></li>
-					<li><a href="' . VIEWS . '/tutorial.php">Tutorial</a></li>
-					<li><a href="' . VIEWS . '/ranking.php">Ranking</a></li>
-					<li><a href="' . VIEWS . '/jugar.php">Jugar</a></li>
-					<li><a href="' . VIEWS . '/creditos.php"">Creditos</a></li>
-				</ul>
-			
-		</div>
+	print('
+	<div class="navbar-game">
+		<!-- Dropdown Structure -->
+		<ul id="dropdown1" class="dropdown-content">
+			<li>
+				<a href="' . VIEWS . '/registrar.php">Registrarme</a>
+			</li>
+			<li class="divider"></li>
+			<li>
+				<a href="' . HOST . '/views/login.php">iniciar sesion</a>
+			</li>
+			<li class="divider"></li>
+			<li>
+				<a href="' . HOST . '/views/adminLogin.php">iniciar administrativo</a>
+			</li>
+
+
 	
-	');
+		</ul>
+		<nav>
+			<div class="nav-wrapper  cyan flow-text">
+					<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+					<ul id="nav-mobile" class="left hide-on-med-and-down">
+							<li><a href="' . HOST . '/">Inicio</a></li>
+							<li><a href="' . VIEWS . '/temas.php">Temas</a></li>
+							<li><a href="' . VIEWS . '/tutorial.php">Tutorial</a></li>
+							<li><a href="' . VIEWS . '/ranking.php">Ranking</a></li>
+							<li><a href="' . VIEWS . '/jugar.php">Jugar</a></li>
+							<li><a href="' . VIEWS . '/creditos.php"">Creditos</a></li>
+					</ul>
+				<ul class="right hide-on-med-and-down">
+					<!-- Dropdown Trigger -->
+					<li>
+						<a class="dropdown-trigger " href="javascript:void(0);" data-target="dropdown1">Iniciar sesion
+						
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<ul class="sidenav" id="mobile-demo">
+				<li><a href="' . HOST . '/">Inicio</a></li>
+				<li><a href="' . VIEWS . '/temas.php">Temas</a></li>
+				<li><a href="' . VIEWS . '/tutorial.php">Tutorial</a></li>
+				<li><a href="' . VIEWS . '/ranking.php">Ranking</a></li>
+				<li><a href="' . VIEWS . '/jugar.php">Jugar</a></li>
+				<li><a href="' . VIEWS . '/creditos.php"">Creditos</a></li>
+				<li><a href="' . VIEWS . '/registrar.php">Registrarme</a></li>
+				<li><a href="' . VIEWS . '/login.php">Iniciar sesion</a></li>
+				<li><a href="' . VIEWS . '/login.php">Iniciar administrativo</a></li>
+
+			</ul>
+		
+	</div>
+
+');
 }
 
 

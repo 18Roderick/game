@@ -47,6 +47,9 @@ if (array_key_exists('registrar', $_POST)) {
             print("<p algin='center' class='warning'>Error al registrar usuario</p>");
             printForm($corregir);
         } else {
+					if(isset($_COOKIE['user'])){
+						setcookie("user", "", time() - 3600);
+					}
             $_SESSION['usuario_validado'] = true;
             header('Location: ' . HOST . '/views/jugar.php');
         }

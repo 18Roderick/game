@@ -10,6 +10,7 @@ let xp = 0;
 
 const limitePregunta = 5;
 const cargarPreguntas = "cargar_preguntas.php";
+
 const URL = archivo => {
   const protocolo = window.location.protocol + "//";
   const host = window.location.hostname;
@@ -68,20 +69,19 @@ $(() => {
     xp = 20;
   }
   
+
 });
 
 
 function verificar_respuesta(){
 
 }
-function verificar(id) {
+function verificar() {
   console.log(preguntas);
  // console.log(getCookie('user'));
   
   let radio = containerDiv[inicio].querySelectorAll('input'); 
   let loader = containerDiv[inicio].querySelectorAll('.verificando'); 
-  let tituloPregunta = containerDiv[inicio].querySelectorAll('p')[0];
-  tituloPregunta = $(tituloPregunta).text();
   let label = 0;
 
   radio.forEach( elemen => {
@@ -89,19 +89,23 @@ function verificar(id) {
     if(elemen.checked){
 
       $(loader).css('display','block');
-      console.log(elemen);
+      //console.log(elemen);
       label = $(`[for='${elemen.id}']`).text();
       let res = dataGame[parseInt(elemen.id)].correcta;
-
+      let tituloPregunta = containerDiv[inicio].querySelectorAll('p')[0];
+      let idPregunta = $(tituloPregunta).attr('value');
+      tituloPregunta = $(tituloPregunta).text();
+      
       if(res){
-        console.log('Respuesta correcta');
-        success(tituloPregunta , elemen, label);
+
+        
+        console.log('Respuesta correcta id de pregunta '+idPregunta);
+        success(tituloPregunta , elemen, label, idPregunta);
       }else{
         fail(tituloPregunta , elemen, label);
       }
 
-      $(loader).css('display', 'none');
-      
+      $(loader).css('display', 'none');      
  
 
     }
@@ -136,7 +140,7 @@ function prepararDivs() {
   $(containerDiv[inicio]).css("display", "block");
 }
 
-function success(titulo , elemen, text){
+function success(titulo , elemen, text, id){
   swal({
     title:'Bien hecho! ' + getCookie('user'),
     text:'Tu eleccion es la correcta!',
@@ -152,6 +156,7 @@ function success(titulo , elemen, text){
     puntaje += xp;
     elemen.checked = false;
     siguiente();
+    guardarProgreso(id);
   });
 }
 
@@ -186,3 +191,31 @@ function getCookie(cname) {
   }
   return "";
 }
+
+function guardarProgreso(id){
+  const actualizarFile = 'actualizar_puntaje.php';
+  const data = {user : getCookie('user'), puntaje , id};
+  $.ajax({
+    data,
+    url: URL(actualizarFile),
+    type: "POST",
+    beforeSend: () => { },
+    dataFilter: (response, type) => {
+      return JSON.parse(response);
+    },
+    success: response => {
+      console.log(response)
+     
+      if (response.status) {
+        console.log('puntaje actualizado');
+      }
+    },
+    complete: () => {
+      console.log("final de actualizacion");
+    }
+  });
+}
+function nextLevel(){
+  
+}
+
