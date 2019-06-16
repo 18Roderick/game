@@ -19,7 +19,10 @@ require ROOT.'/functions/validar_form.php';
 print('<link rel="stylesheet" type="text/css" href="'.PUBLIC_DIR.'/css/form.css">');
 print('<script src="'.HOST.'/public/js/form.js"></script>');
 
-if (array_key_exists('registrar', $_POST)) {
+if (array_key_exists('registrar', $_POST) && !isset($_SERVER['usuario_validado']) ) {
+		if(isset($_COOKIE['user'])){
+			setcookie("user", "", time() - 3600);
+		}
     $hashed_password = "goq5QxfSX04e.";
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
@@ -54,7 +57,7 @@ if (array_key_exists('registrar', $_POST)) {
             header('Location: ' . HOST . '/views/jugar.php');
         }
 
-        printSucces();
+        //printSucces();
     } else {
         printForm($corregir);
 

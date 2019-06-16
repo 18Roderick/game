@@ -10,7 +10,9 @@ if( isset($_SESSION['usuario_validado']) ){
     $exito = $Usuario->logout($_COOKIE['user']);
   }
   
-  setcookie("user", "", time() - 3600);
+  if(isset($_COOKIE['user'])){
+    setcookie("user", "", time() - 3600);
+  }
   header('Location: http://'.$_SERVER['HTTP_HOST'].'/game');
 }
 ?>

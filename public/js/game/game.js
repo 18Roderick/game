@@ -117,14 +117,14 @@ function siguiente() {
     inicio = (inicio < size-1) ? inicio + 1 : 0;
 
     if(inicio == limitePregunta){
-      window.location.assign(`${window.location.href}`);
+      //window.location.assign(`${window.location.href}`);
+      location.reload();
     }else{
       $(containerDiv[inicio]).slideDown(300);
       $('#avance').text(`Pregunta ${inicio+1} de ${limitePregunta}`);
       $('#puntaje').text(`Puntaje ${puntaje}`);
 
     }
-
 
   
   });
@@ -155,8 +155,11 @@ function success(titulo , elemen, text, id){
     console.log(titulo, text);
     puntaje += xp;
     elemen.checked = false;
-    siguiente();
-    guardarProgreso(id);
+    guardarProgreso(id, () => {
+      siguiente();
+    });
+    
+    
   });
 }
 
@@ -194,7 +197,7 @@ function getCookie(cname) {
 
 function guardarProgreso(id){
   const actualizarFile = 'actualizar_puntaje.php';
-  const data = {user : getCookie('user'), puntaje , id};
+  const data = {user : getCookie('user'), puntaje:xp , id};
   $.ajax({
     data,
     url: URL(actualizarFile),
