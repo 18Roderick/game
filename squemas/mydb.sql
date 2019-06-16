@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-07-2018 a las 02:37:22
+-- Tiempo de generación: 12-07-2018 a las 21:20:15
 -- Versión del servidor: 10.1.33-MariaDB
 -- Versión de PHP: 7.2.6
 
@@ -309,20 +309,21 @@ DELIMITER ;
 -- Estructura de tabla para la tabla `completo`
 --
 
-CREATE TABLE `completo` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `completo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `unidad` int(11) NOT NULL,
   `cantidad_preguntas` int(11) NOT NULL,
-  `cantidad_respondidas` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `cantidad_respondidas` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `completo`
 --
 
 INSERT INTO `completo` (`id`, `id_usuario`, `unidad`, `cantidad_preguntas`, `cantidad_respondidas`) VALUES
-(1, 22, 1, 15, 1);
+(1, 22, 1, 15, 8);
 
 -- --------------------------------------------------------
 
@@ -330,11 +331,12 @@ INSERT INTO `completo` (`id`, `id_usuario`, `unidad`, `cantidad_preguntas`, `can
 -- Estructura de tabla para la tabla `modulo`
 --
 
-CREATE TABLE `modulo` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `modulo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` text NOT NULL,
-  `descripcion` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='contiene los nombre de los modulos';
+  `descripcion` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='contiene los nombre de los modulos';
 
 --
 -- Volcado de datos para la tabla `modulo`
@@ -351,8 +353,8 @@ INSERT INTO `modulo` (`id`, `titulo`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `personal`
 --
 
-CREATE TABLE `personal` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `personal` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `apellido` varchar(45) DEFAULT NULL,
   `sexo` char(1) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
@@ -361,8 +363,12 @@ CREATE TABLE `personal` (
   `telefono` varchar(45) DEFAULT NULL,
   `fecha` varchar(45) DEFAULT NULL,
   `correo` varchar(255) NOT NULL,
-  `usuario_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `usuario_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cedula` (`cedula`),
+  UNIQUE KEY `correo` (`correo`),
+  KEY `fk_personal_usuario1_idx` (`usuario_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `personal`
@@ -377,11 +383,13 @@ INSERT INTO `personal` (`id`, `nombre`, `apellido`, `sexo`, `cedula`, `celular`,
 -- Estructura de tabla para la tabla `preguntas`
 --
 
-CREATE TABLE `preguntas` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `preguntas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `unidad` int(11) NOT NULL,
-  `preguntas` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `preguntas` text,
+  PRIMARY KEY (`id`),
+  KEY `fk_modulo_pregunta` (`unidad`)
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `preguntas`
@@ -438,19 +446,27 @@ INSERT INTO `preguntas` (`id`, `unidad`, `preguntas`) VALUES
 -- Estructura de tabla para la tabla `progreso`
 --
 
-CREATE TABLE `progreso` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `progreso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_pregunta` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `acierto` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `acierto` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `progreso`
 --
 
 INSERT INTO `progreso` (`id`, `id_pregunta`, `id_usuario`, `acierto`) VALUES
-(3, 11, 22, 1);
+(14, 5, 22, 1),
+(15, 1, 22, 1),
+(16, 11, 22, 1),
+(17, 14, 22, 1),
+(18, 8, 22, 1),
+(19, 6, 22, 1),
+(20, 2, 22, 1),
+(21, 7, 22, 1);
 
 -- --------------------------------------------------------
 
@@ -458,18 +474,20 @@ INSERT INTO `progreso` (`id`, `id_pregunta`, `id_usuario`, `acierto`) VALUES
 -- Estructura de tabla para la tabla `ranking`
 --
 
-CREATE TABLE `ranking` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `ranking` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
-  `puntaje` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='tabla de puntaje del jugador';
+  `puntaje` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `fk_ranking_usuario` (`id_usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COMMENT='tabla de puntaje del jugador';
 
 --
 -- Volcado de datos para la tabla `ranking`
 --
 
 INSERT INTO `ranking` (`id`, `id_usuario`, `puntaje`) VALUES
-(4, 22, 10);
+(4, 22, 360);
 
 -- --------------------------------------------------------
 
@@ -477,12 +495,14 @@ INSERT INTO `ranking` (`id`, `id_usuario`, `puntaje`) VALUES
 -- Estructura de tabla para la tabla `respuestas`
 --
 
-CREATE TABLE `respuestas` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `respuestas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `pregunta_id` int(11) NOT NULL,
   `opcion` text COLLATE utf16_bin NOT NULL,
-  `correcta` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
+  `correcta` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_pregunta_respuesta` (`pregunta_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 --
 -- Volcado de datos para la tabla `respuestas`
@@ -668,11 +688,13 @@ INSERT INTO `respuestas` (`id`, `pregunta_id`, `opcion`, `correcta`) VALUES
 -- Estructura de tabla para la tabla `status`
 --
 
-CREATE TABLE `status` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
-  `online` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `online` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `fk_status` (`id_usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `status`
@@ -687,12 +709,13 @@ INSERT INTO `status` (`id`, `id_usuario`, `online`) VALUES
 -- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE `usuario` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `usuario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `tipo` char(1) NOT NULL DEFAULT 'B',
   `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `password` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `usuario`
@@ -700,129 +723,6 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`id`, `tipo`, `username`, `password`) VALUES
 (22, 'B', 'rjrr507@gmail.com', 'go3dlnYJ6v2jM');
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `completo`
---
-ALTER TABLE `completo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `modulo`
---
-ALTER TABLE `modulo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `personal`
---
-ALTER TABLE `personal`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `cedula` (`cedula`),
-  ADD UNIQUE KEY `correo` (`correo`),
-  ADD KEY `fk_personal_usuario1_idx` (`usuario_id`);
-
---
--- Indices de la tabla `preguntas`
---
-ALTER TABLE `preguntas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_modulo_pregunta` (`unidad`);
-
---
--- Indices de la tabla `progreso`
---
-ALTER TABLE `progreso`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `ranking`
---
-ALTER TABLE `ranking`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_ranking_usuario` (`id_usuario`);
-
---
--- Indices de la tabla `respuestas`
---
-ALTER TABLE `respuestas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_pregunta_respuesta` (`pregunta_id`);
-
---
--- Indices de la tabla `status`
---
-ALTER TABLE `status`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_status` (`id_usuario`);
-
---
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `completo`
---
-ALTER TABLE `completo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `modulo`
---
-ALTER TABLE `modulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `personal`
---
-ALTER TABLE `personal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
-
---
--- AUTO_INCREMENT de la tabla `preguntas`
---
-ALTER TABLE `preguntas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
-
---
--- AUTO_INCREMENT de la tabla `progreso`
---
-ALTER TABLE `progreso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `ranking`
---
-ALTER TABLE `ranking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `respuestas`
---
-ALTER TABLE `respuestas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
-
---
--- AUTO_INCREMENT de la tabla `status`
---
-ALTER TABLE `status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Restricciones para tablas volcadas
