@@ -2,8 +2,9 @@ use mydb;
 
 drop function if exists fnValidarUsuario;
 
-create function fnValidarUsuario( _user varchar(255) ) returns boolean
-
+DELIMITER //
+CREATE FUNCTION fnValidarUsuario( _user varchar(255) ) returns boolean
+ 
 begin
   declare _existe boolean default false;
   declare cantidad int default 0;
@@ -18,7 +19,13 @@ begin
     set _existe = true;
   end if;
   return _existe;
-end;
+end; 
+
+DELIMITER //
+
+
+
+
 
 
 
@@ -27,6 +34,7 @@ end;
 
 drop function if exists fnValidarCorreo;
 
+DELIMITER //
 create function fnValidarCorreo( _correo varchar(255) ) returns boolean
 
 begin
@@ -45,13 +53,14 @@ begin
   return _existe;
 end;
 
-
+DELIMITER //
 
 
 
 /*Validar si existe la cedula*/
 drop function if exists fnValidarCedula;
 
+DELIMITER //
 create function fnValidarCedula( _cedula varchar(255) ) returns boolean
 
 begin
@@ -70,7 +79,7 @@ begin
   return _existe;
 end;
 
-
+DELIMITER // 
 /*Validar  iniciar sesion
 
 */
@@ -79,6 +88,7 @@ end;
 
 drop function if exists fnIniciarSesion;
 
+DELIMITER //
 create function fnIniciarSesion( _user varchar(255), _password varchar(255) ) returns boolean
 
 begin
@@ -94,6 +104,7 @@ begin
   
   return cantidad;
 end;
+DELIMITER //
 
 SELECT fnIniciarSesion('8-910-498', 'rj3wmlDjxFM02');
 
